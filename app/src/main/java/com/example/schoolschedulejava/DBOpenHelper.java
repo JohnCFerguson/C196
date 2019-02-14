@@ -58,22 +58,21 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
                     ASSESSMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     ASSESSMENT_NAME + " TEXT, " +
-                    ASSESSMENT_TYPE + " TEXT, ";
+                    ASSESSMENT_TYPE + " TEXT)";
 
     private static final String TABLE_CREATE_COURSES =
             "CREATE TABLE " + TABLE_COURSES + " (" +
                     COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TERM_ID + " INTEGER, " +
+                    MENTOR_ID + "INTEGER, " +
                     COURSE_TITLE + " TEXT, " +
                     COURSE_START + " TEXT, " +
                     COURSE_END + " TEXT, " +
                     COURSE_STATUS + " TEXT, " +
                     COURSE_ASSESSMENTS + " TEXT," +
                     COURSE_NOTES + " TEXT, " +
-                    "FOREIGN KEY (" + TERM_ID + ") REFERENCES (" +
-                    TABLE_TERMS + "), " +
-                    "FOREIGN KEY (" + MENTOR_ID + ") REFERENCES (" +
-                    TABLE_MENTORS + ")" +
+                    "FOREIGN KEY (" + TERM_ID + ") REFERENCES " + TABLE_TERMS+ "(" + TERM_ID + "), " +
+                    "FOREIGN KEY (" + MENTOR_ID + ") REFERENCES (" + TABLE_MENTORS+ "(" + MENTOR_ID + ")" +
                     ")";
 
 
