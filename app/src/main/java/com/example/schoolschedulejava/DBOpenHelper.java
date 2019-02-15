@@ -54,7 +54,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     MENTOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     MENTOR_NAME + " TEXT, " +
                     MENTOR_EMAIL + " TEXT, " +
-                    MENTOR_PHONE + "T"CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
+                    MENTOR_PHONE + "TEXT)";
+
+    private static final String TABLE_CREATE_ASSESSMENTS =
+            "CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
                     ASSESSMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     ASSESSMENT_NAME + " TEXT, " +
                     ASSESSMENT_TYPE + " TEXT)";
