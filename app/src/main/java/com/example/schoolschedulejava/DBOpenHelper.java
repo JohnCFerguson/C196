@@ -20,6 +20,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     //Courses table constants identifying the values for the course table
     private static final String TABLE_COURSES = "courses";
     private static final String COURSE_ID = "_id";
+    private static final String TERMID = "termId";
+    private static final String MENTORID = "mentorId";
     private static final String COURSE_TITLE = "courseTitle";
     private static final String COURSE_START = "courseStart";
     private static final String COURSE_END = "courseEnd";
@@ -52,10 +54,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     MENTOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     MENTOR_NAME + " TEXT, " +
                     MENTOR_EMAIL + " TEXT, " +
-                    MENTOR_PHONE + "TEXT)";
-
-    private static final String TABLE_CREATE_ASSESSMENTS =
-            "CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
+                    MENTOR_PHONE + "T"CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
                     ASSESSMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     ASSESSMENT_NAME + " TEXT, " +
                     ASSESSMENT_TYPE + " TEXT)";
@@ -63,16 +62,16 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String TABLE_CREATE_COURSES =
             "CREATE TABLE " + TABLE_COURSES + " (" +
                     COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    TERM_ID + " INTEGER, " +
-                    MENTOR_ID + "INTEGER, " +
+                    TERMID + " TEXT, " +
+                    MENTORID + " TEXT, " +
                     COURSE_TITLE + " TEXT, " +
                     COURSE_START + " TEXT, " +
                     COURSE_END + " TEXT, " +
                     COURSE_STATUS + " TEXT, " +
                     COURSE_ASSESSMENTS + " TEXT," +
                     COURSE_NOTES + " TEXT, " +
-                    "FOREIGN KEY (" + TERM_ID + ") REFERENCES " + TABLE_TERMS+ "(" + TERM_ID + "), " +
-                    "FOREIGN KEY (" + MENTOR_ID + ") REFERENCES (" + TABLE_MENTORS+ "(" + MENTOR_ID + ")" +
+                    "FOREIGN KEY (" + TERMID + ") REFERENCES " + TABLE_TERMS+ "(" + TERM_ID + "), " +
+                    "FOREIGN KEY (" + MENTORID + ") REFERENCES " + TABLE_MENTORS+ "(" + MENTOR_ID + ")" +
                     ")";
 
 
