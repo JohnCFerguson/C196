@@ -8,39 +8,52 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     //Strings for database information
     private static final String DATABASE_NAME = "schedule.db";
-    private static final int DATABSE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;
 
     //Terms table constants identifying the values for the term table
-    private static final String TABLE_TERMS = "terms";
-    private static final String TERM_ID = "_id";
-    private static final String TERM_TITLE = "termTitle";
-    private static final String TERM_START = "termStart";
-    private static final String TERM_END = "termEnd";
+    public static final String TABLE_TERMS = "terms";
+    public static final String TERM_ID = "_id";
+    public static final String TERM_TITLE = "termTitle";
+    public static final String TERM_START = "termStart";
+    public static final String TERM_END = "termEnd";
+
+    public static final String[] TERMS_COLUMNS =
+            {TERM_ID, TERM_TITLE, TERM_START, TERM_END};
 
     //Courses table constants identifying the values for the course table
-    private static final String TABLE_COURSES = "courses";
-    private static final String COURSE_ID = "_id";
-    private static final String TERMID = "termId";
-    private static final String MENTORID = "mentorId";
-    private static final String COURSE_TITLE = "courseTitle";
-    private static final String COURSE_START = "courseStart";
-    private static final String COURSE_END = "courseEnd";
-    private static final String COURSE_STATUS = "courseStatus";
-    private static final String COURSE_ASSESSMENTS = "courseAssessments";
-    private static final String COURSE_NOTES = "courseNotes";
+    public static final String TABLE_COURSES = "courses";
+    public static final String COURSE_ID = "_id";
+    public static final String TERMID = "termId";
+    public static final String MENTORID = "mentorId";
+    public static final String COURSE_TITLE = "courseTitle";
+    public static final String COURSE_START = "courseStart";
+    public static final String COURSE_END = "courseEnd";
+    public static final String COURSE_STATUS = "courseStatus";
+    public static final String COURSE_ASSESSMENTS = "courseAssessments";
+    public static final String COURSE_NOTES = "courseNotes";
+
+    public static final String[] COURSES_COLUMNS =
+            {COURSE_ID, TERMID, MENTORID, COURSE_TITLE, COURSE_START, COURSE_END, COURSE_STATUS,
+                    COURSE_ASSESSMENTS, COURSE_NOTES};
 
     //Mentor table constants identifying values for course mentors
-    private static final String TABLE_MENTORS = "mentors";
-    private static final String MENTOR_ID = "_id";
-    private static final String MENTOR_NAME = "mentorName";
-    private static final String MENTOR_PHONE  = "mentorPhone";
-    private static final String MENTOR_EMAIL = "mentorEmail";
+    public static final String TABLE_MENTORS = "mentors";
+    public static final String MENTOR_ID = "_id";
+    public static final String MENTOR_NAME = "mentorName";
+    public static final String MENTOR_PHONE  = "mentorPhone";
+    public static final String MENTOR_EMAIL = "mentorEmail";
+
+    public static final String[] MENTORS_COLUMNS =
+            {MENTOR_ID, MENTOR_NAME, MENTOR_PHONE, MENTOR_EMAIL};
 
     //Assessments table constants identifying values for course assessments
-    private static final String TABLE_ASSESSMENTS = "assessments";
-    private static final String ASSESSMENT_ID = "_id";
-    private static final String ASSESSMENT_NAME = "assessmentName";
-    private static final String ASSESSMENT_TYPE = "assessmentType";
+    public static final String TABLE_ASSESSMENTS = "assessments";
+    public static final String ASSESSMENT_ID = "_id";
+    public static final String ASSESSMENT_NAME = "assessmentName";
+    public static final String ASSESSMENT_TYPE = "assessmentType";
+
+    public static final String[] ASSESSMENTS_COLUMNS =
+            {ASSESSMENT_ID, ASSESSMENT_NAME, ASSESSMENT_TYPE};
 
     private static final String TABLE_CREATE_TERMS =
             "CREATE TABLE " + TABLE_TERMS + " (" +
@@ -79,7 +92,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
 
     public DBOpenHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABSE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

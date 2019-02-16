@@ -7,35 +7,32 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class TermProvider extends ContentProvider {
+public class CourseProvider extends ContentProvider {
 
-    private static final String AUTHORITY = "com.example.schoolschedulejava.termprovider";
-    private static final String TERMS_PATH = "terms";
-    public static final Uri TERMS_URI =
-            Uri.parse("content://" + AUTHORITY + "/" + TERMS_PATH);
-
+    private static final String AUTHORITY = "com.example.schoolschedulejava.courseprovider";
+    private static final String COURSES_PATH = "courses";
+    public static final Uri COURSES_URI =
+            Uri.parse("content://" + AUTHORITY + "/" + COURSES_PATH);
 
     //Constant that identifies requested operation
-    private static final int TERM = 1;
-    private static final int TERM_ID = 2;
-
-
+    private static final int COURSE = 1;
+    private static final int COURSE_ID = 2;
 
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(AUTHORITY, TERMS_PATH, TERM);
-        uriMatcher.addURI(AUTHORITY, TERMS_PATH + "/#", TERM_ID);
+        uriMatcher.addURI(AUTHORITY, COURSES_PATH, COURSE);
+        uriMatcher.addURI(AUTHORITY, COURSES_PATH + "/#", COURSE_ID);
     }
 
     private SQLiteDatabase db;
-    
+
     @Override
     public boolean onCreate() {
 
         DBOpenHelper helper = new DBOpenHelper(getContext());
-        
+
         db = helper.getWritableDatabase();
 
         return true;
@@ -43,8 +40,8 @@ public class TermProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri,  String[] projection,  String selection, String[] selectionArgs, String sortOrder) {
-        return db.query(DBOpenHelper.TABLE_TERMS, DBOpenHelper.TERMS_COLUMNS, selection, null, null,
-                null, DBOpenHelper.TERM_ID + " DESC");
+        return db.query(DBOpenHelper.TABLE_COURSES, DBOpenHelper.COURSES_COLUMNS, selection, null, null,
+                null, DBOpenHelper.COURSE_START + " ASC");
     }
 
     @Override
@@ -54,17 +51,17 @@ public class TermProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long id = db.insert(DBOpenHelper.TABLE_TERMS, null, values);
-        return Uri.parse(TERMS_PATH + "/" + id);
+        long id = db.insert(DBOpenHelper.TABLE_COURSES, null, values);
+        return Uri.parse(COURSES_PATH + "/" + id);
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return db.delete(DBOpenHelper.TABLE_TERMS, selection, selectionArgs);
+        return db.delete(DBOpenHelper.TABLE_COURSES, selection, selectionArgs);
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return db.update(DBOpenHelper.TABLE_TERMS, values, selection, selectionArgs);
+        return db.update(DBOpenHelper.TABLE_COURSES, values, selection, selectionArgs);
     }
 }

@@ -18,6 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.schoolschedulejava.termprovider"
+            android:name=".TermProvider"
+            android:exported="false" />
+        
     </application>
 
 </manifest>
