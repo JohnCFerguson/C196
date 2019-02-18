@@ -9,8 +9,8 @@ import android.net.Uri;
 
 public class AssessmentProvider extends ContentProvider {
 
-    private static final String AUTHORITY = "com.example.schoolschedulejava.assmessmentprovider";
-    private static final String ASSESSMENTS_PATH = "ASSESSMENTS";
+    private static final String AUTHORITY = "com.example.schoolschedulejava.assessmentprovider";
+    private static final String ASSESSMENTS_PATH = DBOpenHelper.TABLE_ASSESSMENTS;
     public static final Uri ASSESSMENTS_URI =
             Uri.parse("content://" + AUTHORITY + "/" + ASSESSMENTS_PATH);
 

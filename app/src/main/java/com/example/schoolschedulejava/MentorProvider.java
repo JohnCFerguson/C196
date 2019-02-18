@@ -10,7 +10,7 @@ import android.net.Uri;
 public class MentorProvider extends ContentProvider {
 
     private static final String AUTHORITY = "com.example.schoolschedulejava.mentorprovider";
-    private static final String MENTORS_PATH = "MENTORS";
+    private static final String MENTORS_PATH = "mentors";
     public static final Uri MENTORS_URI =
             Uri.parse("content://" + AUTHORITY + "/" + MENTORS_PATH);
 

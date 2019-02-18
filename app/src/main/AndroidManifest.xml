@@ -22,6 +22,18 @@
             android:authorities="com.example.schoolschedulejava.termprovider"
             android:name=".TermProvider"
             android:exported="false" />
+        <provider
+            android:authorities="com.example.schoolschedulejava.assessmentprovider"
+            android:name=".AssessmentProvider"
+            android:exported="false" />
+        <provider
+            android:authorities="com.example.schoolschedulejava.mentorprovider"
+            android:name=".MentorProvider"
+            android:exported="false" />
+        <provider
+            android:authorities="com.example.schoolschedulejava.courseprovider"
+            android:name=".CourseProvider"
+            android:exported="false" />
         
     </application>
 

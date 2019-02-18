@@ -19,8 +19,6 @@ public class TermProvider extends ContentProvider {
     private static final int TERM = 1;
     private static final int TERM_ID = 2;
 
-
-
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
