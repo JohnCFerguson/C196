@@ -1,39 +1,39 @@
 package com.example.schoolschedulejava;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor>
+{
+    private CursorAdapter cA;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Cursor cursor = getContentResolver().query(TermProvider.TERMS_URI,
-                DBOpenHelper.TERMS_COLUMNS, null, null, null,
-                null);
+        //insertTerm("Term 1", "01/01/2019", "06/01/2019");
 
         String[] from = {DBOpenHelper.TERM_TITLE};
         int[] to = {android.R.id.text1};
-        CursorAdapter cA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
-                cursor, from, to, 0);
+        cA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
+                null, from, to, 0);
         ListView list = findViewById(android.R.id.list);
+        list.setAdapter(cA);
+
+        getLoaderManager().initLoader(0, null, this);
     }
 
     private void insertTerm(String termTitle, String termStart, String termEnd) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void insertCourse(int termId, int mentorId, String courseTitle, String courseStart,
                               String courseEnd, String courseStatus, String courseAssessments,
-                              String courseNotes ) {
+                              String courseNotes) {
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.TERMID, termId);
         values.put(DBOpenHelper.MENTORID, mentorId);
@@ -78,4 +78,25 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "Inserted Term " + termUri.getLastPathSegment());
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                this,   // Parent activity context
+                TermProvider.TERMS_URI,        // Table to query
+                null,     // Projection to return
+                null,            // No selection clause
+                null,            // No selection arguments
+                null             // Default sort order
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        cA.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cA.swapCursor(null);
+    }
 }
