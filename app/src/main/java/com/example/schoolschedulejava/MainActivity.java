@@ -1,8 +1,10 @@
 package com.example.schoolschedulejava;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //insertTerm("Term 1", "01/01/2019", "06/01/2019");
+
 
         String[] from = {DBOpenHelper.TERM_TITLE, DBOpenHelper.TERM_START};
         int[] to = {android.R.id.text1};
@@ -83,8 +87,8 @@ public class MainActivity extends AppCompatActivity
         values.put(DBOpenHelper.COURSE_STATUS, courseStatus);
         values.put(DBOpenHelper.COURSE_ASSESSMENTS, courseAssessments);
         values.put(DBOpenHelper.COURSE_NOTES, courseNotes);
-        Uri courseUri = getContentResolver().insert(TermProvider.TERMS_URI, values);
-        Log.d("MainActivity", "Inserted Term " + courseUri.getLastPathSegment());
+        Uri courseUri = getContentResolver().insert(CourseProvider.COURSES_URI, values);
+        Log.d("MainActivity", "Inserted Course " + courseUri.getLastPathSegment());
 
         return courseUri;
     }
@@ -104,11 +108,49 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_create_sample:
                 insertSampleData();
                 break;
-            case R.id.action_delete_all;
+            case R.id.action_delete_all:
+                deleteAllData();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllData() {
+        DialogInterface.OnClickListener dialogClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        if (button == DialogInterface.BUTTON_POSITIVE) {
+                            getContentResolver().delete(
+                                    TermProvider.TERMS_URI, null, null
+                            );
+                            getContentResolver().delete(
+                                    CourseProvider.COURSES_URI, null, null
+                            );
+                            getContentResolver().delete(
+                                    MentorProvider.MENTORS_URI, null, null
+                            );
+                            getContentResolver().delete(
+                                    AssessmentProvider.ASSESSMENTS_URI, null, null
+                            );
+
+                            restartLoader();
+
+                            Toast.makeText(MainActivity.this,
+                                    getString(R.string.all_deleted),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.are_you_sure))
+                .setPositiveButton(getString(android.R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(android.R.string.no), dialogClickListener)
+                .show();
+
+
     }
 
     private void insertSampleData() {
@@ -119,15 +161,19 @@ public class MainActivity extends AppCompatActivity
                Integer.parseInt(mentorUri.getLastPathSegment()),"Course 1", "1/1/2019",
                "1/31/2019", "Active", assessmentUri.getLastPathSegment(), "This course is tough");
 
-        getLoaderManager().restartLoader(0, null, this);
+        restartLoader();
 
+    }
+
+    private void restartLoader() {
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(
                 this,   // Parent activity context
-                TermProvider.TERMS_URI,        // Table to query
+                TermProvider.TERMS_URI,       // Table to query
                 null,     // Projection to return
                 null,            // No selection clause
                 null,            // No selection arguments
