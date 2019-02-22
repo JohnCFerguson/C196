@@ -32,11 +32,7 @@ public class MainActivity extends AppCompatActivity
 
         //insertTerm("Term 1", "01/01/2019", "06/01/2019");
 
-
-        String[] from = {DBOpenHelper.TERM_TITLE, DBOpenHelper.TERM_START};
-        int[] to = {android.R.id.text1};
-        cA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
-                null, from, to, 0);
+        cA = new TermCursorAdapter(this, null,0);
         ListView list = findViewById(android.R.id.list);
         list.setAdapter(cA);
 
