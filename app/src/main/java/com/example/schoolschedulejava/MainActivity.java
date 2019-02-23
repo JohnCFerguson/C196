@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>
 {
+    private static final int EDITOR_REQUEST_CODE = 1001;
     private CursorAdapter cA;
 
     @Override
@@ -107,6 +110,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_delete_all:
                 deleteAllData();
                 break;
+            case R.id.action_add_new_term:
+                //openTermEditorForNewTerm();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -185,5 +191,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         cA.swapCursor(null);
+    }
+
+    public void openTermEditorForNewTerm(View view) {
+        Intent intent = new Intent(this, AddTermActivity.class);
+        startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 }

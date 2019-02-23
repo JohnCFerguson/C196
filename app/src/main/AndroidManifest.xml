@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.schoolschedulejava" >
+    package="com.example.schoolschedulejava">
 
     <application
         android:allowBackup="true"
@@ -8,33 +8,39 @@
         android:label="School Schedule"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
-            android:label="School Schedule" >
+            android:label="School Schedule">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AddTermActivity"
+            android:label="AddTermActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
         <provider
-            android:authorities="com.example.schoolschedulejava.termprovider"
             android:name=".TermProvider"
+            android:authorities="com.example.schoolschedulejava.termprovider"
             android:exported="false" />
         <provider
-            android:authorities="com.example.schoolschedulejava.assessmentprovider"
             android:name=".AssessmentProvider"
+            android:authorities="com.example.schoolschedulejava.assessmentprovider"
             android:exported="false" />
         <provider
-            android:authorities="com.example.schoolschedulejava.mentorprovider"
             android:name=".MentorProvider"
+            android:authorities="com.example.schoolschedulejava.mentorprovider"
             android:exported="false" />
         <provider
-            android:authorities="com.example.schoolschedulejava.courseprovider"
             android:name=".CourseProvider"
+            android:authorities="com.example.schoolschedulejava.courseprovider"
             android:exported="false" />
-        
     </application>
 
 </manifest>

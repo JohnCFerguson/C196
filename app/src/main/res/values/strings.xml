@@ -7,4 +7,7 @@
     <string name="dash">-</string>
     <string name="bookmark_icon">bookmark icon</string>
     <string name="dummy_text">Dummy Text</string>
+    <string name="add_new_term">Add New Term</string>
+    <string name="new_term">New Term</string>
+    <string name="pick_date">Term Start</string>
 </resources>

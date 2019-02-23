@@ -13,5 +13,9 @@
         android:orderInCategory="101"
         android:title="@string/delete_all_sample_data"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/action_add_new_term"
+        android:orderInCategory="102"
+        android:title="@string/add_new_term"
+        app:showAsAction="never" />
 </menu>

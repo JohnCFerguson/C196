@@ -22,6 +22,8 @@ public class TermProvider extends ContentProvider {
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
+    public static final String TERM_ITEM_TYPE = "term";
+
     static {
         uriMatcher.addURI(AUTHORITY, TERMS_PATH, TERM);
         uriMatcher.addURI(AUTHORITY, TERMS_PATH + "/#", TERM_ID);
