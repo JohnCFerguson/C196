@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -38,6 +39,17 @@ public class MainActivity extends AppCompatActivity
         cA = new TermCursorAdapter(this, null,0);
         ListView list = findViewById(android.R.id.list);
         list.setAdapter(cA);
+        list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                openTermViewForExistingTerm(view);
+
+            }
+        });
+
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -191,6 +203,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         cA.swapCursor(null);
+    }
+
+    public void openTermViewForExistingTerm(View view) {
+        Intent intent = new Intent(this, ViewTermActivity.class);
+        startActivityForResult(intent, 0);
     }
 
     public void openTermEditorForNewTerm(View view) {

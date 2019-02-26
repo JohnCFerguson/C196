@@ -2,31 +2,60 @@ package com.example.schoolschedulejava;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.CursorAdapter;
+import android.widget.SimpleCursorAdapter;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddTermActivity extends AppCompatActivity {
 
+    private static final String SET_DEBUG_TAG = "Jank is borked";
     private String action;
-    private EditText editor;
+    private ArrayList<String> termsList;
+    private Cursor termsQuery;
     private CalendarView cal;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
 
-        editor = findViewById(R.id.editText);
+        termsList = new ArrayList<>();
+
+        termsQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
+                null, null, null, null);
+
+        String termTitle;
+        try {
+            do {
+                termsQuery.moveToNext();
+                termTitle = termsQuery.getString(termsQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
+                Log.d("AddTermActivity", termTitle);
+                try {
+                    termsList.add(termTitle);
+                }
+                catch (Exception e) {
+                    Log.e(SET_DEBUG_TAG, "Error " + e.toString());
+                }
+            } while(termsQuery.moveToNext());
+        }
+        catch (Exception e) {
+            Log.e(SET_DEBUG_TAG, "Error going to next " + e.toString());
+        }
+
+        /*for (String s : termsList) {
+            Log.d("AddTermActivity", s);
+        }*/
 
         Intent intent = getIntent();
 
@@ -51,7 +80,6 @@ public class AddTermActivity extends AppCompatActivity {
     }
 
     private void finishEditing() {
-        String termTitle = editor.getText().toString().trim();
         Calendar startDate = Calendar.getInstance();
         startDate.setTimeInMillis(cal.getDate());
         Calendar endDate = Calendar.getInstance();
@@ -60,12 +88,12 @@ public class AddTermActivity extends AppCompatActivity {
 
         switch(action) {
             case Intent.ACTION_INSERT:
-                if(termTitle.length() == 0){
+                /*if(termTitle.length() == 0){
                     setResult(RESULT_CANCELED);
                 }
                 else {
                     //insertTerm(termTitle,);
-                }
+                }*/
                 break;
             case Intent.ACTION_EDIT:
 

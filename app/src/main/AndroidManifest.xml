@@ -9,7 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ViewTermActivity"
+            android:label="@string/title_activity_view_term"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.schoolschedulejava.MainActivity" />
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="School Schedule">
@@ -22,8 +30,7 @@
         <activity
             android:name=".AddTermActivity"
             android:label="AddTermActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
 
         <provider
             android:name=".TermProvider"

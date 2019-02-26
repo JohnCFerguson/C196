@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/imageDocIcon"
+        android:contentDescription="@string/bookmark_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_book_open_outline_black_48dp" />
+
+    <TextView
+        android:id="@+id/tvCourse"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="239dp"
+        android:layout_marginRight="239dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toEndOf="@+id/imageDocIcon"
+        android:layout_toRightOf="@+id/imageDocIcon"
+        android:gravity="start"
+        android:singleLine="true"
+        android:text="@string/dummy_text"
+        android:textColor="@color/list_item_text"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvCourseDates"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toEndOf="@+id/imageDocIcon"
+        android:layout_toRightOf="@+id/imageDocIcon"
+        android:gravity="start"
+        android:singleLine="true"
+        android:text="@string/dummy_text"
+        android:textColor="@color/list_item_text"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/statusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_text"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="50dp"
+        android:textSize="14sp"
+        android:layout_marginStart="50dp" />
+
+    <ListView
+        android:id="@+id/mentorList"
+        android:layout_width="wrap_content"
+        android:layout_height="177dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="32dp"/>
+
+
+</RelativeLayout>
