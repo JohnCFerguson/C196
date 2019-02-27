@@ -78,5 +78,12 @@
         android:layout_marginLeft="160dp"
         android:layout_marginTop="32dp"/>
 
+    <TextView
+        android:id="@+id/tvTermId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="TextView" />
+
 
 </RelativeLayout>

@@ -43,7 +43,7 @@ public class TermProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri,  String[] projection,  String selection, String[] selectionArgs, String sortOrder) {
-        return db.query(DBOpenHelper.TABLE_TERMS, DBOpenHelper.TERMS_COLUMNS, selection, null, null,
+        return db.query(DBOpenHelper.TABLE_TERMS, DBOpenHelper.TERMS_COLUMNS, selection, selectionArgs, null,
                 null, DBOpenHelper.TERM_ID + " ASC");
     }
 

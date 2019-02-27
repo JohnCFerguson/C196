@@ -7,12 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class CourseProvider extends ContentProvider {
+public class courseWithMentorProvider extends ContentProvider {
 
-    private static final String AUTHORITY = "com.example.schoolschedulejava.courseprovider";
+    private static final String AUTHORITY = "com.example.schoolschedulejava.courseswithmentorsprovider";
     private static final String COURSES_PATH = "courses";
-    public static final Uri COURSES_URI =
-            Uri.parse("content://" + AUTHORITY + "/" + COURSES_PATH);
+    private static final String MENTORS_PATH = "mentors";
+    public static final Uri COURSESWITHMENTORS_URI =
+            Uri.parse("content://" + AUTHORITY + "/" + COURSES_PATH + "with" + MENTORS_PATH);
 
     //Constant that identifies requested operation
     private static final int COURSE = 1;
@@ -28,6 +29,8 @@ public class CourseProvider extends ContentProvider {
 
     private SQLiteDatabase db;
 
+    private static final String COURSE_WITH_MENTOR_QUERY = "";
+
     @Override
     public boolean onCreate() {
 
@@ -39,7 +42,7 @@ public class CourseProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri,  String[] projection,  String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         return db.query(DBOpenHelper.TABLE_COURSES, DBOpenHelper.COURSES_COLUMNS, selection, selectionArgs, null,
                 null, DBOpenHelper.COURSE_START + " ASC");
     }
@@ -57,11 +60,12 @@ public class CourseProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return db.delete(DBOpenHelper.TABLE_COURSES, selection, selectionArgs);
+        return 0;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return db.update(DBOpenHelper.TABLE_COURSES, values, selection, selectionArgs);
+        return 0;
     }
+
 }

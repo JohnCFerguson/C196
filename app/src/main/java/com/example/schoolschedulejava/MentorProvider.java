@@ -40,7 +40,7 @@ public class MentorProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri,  String[] projection,  String selection, String[] selectionArgs, String sortOrder) {
-        return db.query(DBOpenHelper.TABLE_MENTORS, DBOpenHelper.MENTORS_COLUMNS, selection, null, null,
+        return db.query(DBOpenHelper.TABLE_MENTORS, DBOpenHelper.MENTORS_COLUMNS, selection, selectionArgs, null,
                 null, DBOpenHelper.MENTOR_NAME + " DESC");
     }
 

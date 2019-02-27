@@ -44,9 +44,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                openTermViewForExistingTerm(view);
-
+                Log.d("Term ID:", cA.getItemId(position) + " ");
+                openTermViewForExistingTerm(view, cA.getItemId(position));
             }
         });
 
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         values.put(DBOpenHelper.MENTOR_EMAIL, mentorEmail);
         values.put(DBOpenHelper.MENTOR_PHONE, mentorPhone);
         Uri mentorUri = getContentResolver().insert(MentorProvider.MENTORS_URI, values);
-        Log.d("MainActivity", "Inserted Term " + mentorUri.getLastPathSegment());
+        Log.d("MainActivity", "Inserted Mentor " + mentorUri.getLastPathSegment());
 
         return mentorUri;
     }
@@ -205,9 +204,10 @@ public class MainActivity extends AppCompatActivity
         cA.swapCursor(null);
     }
 
-    public void openTermViewForExistingTerm(View view) {
+    public void openTermViewForExistingTerm(View view, long termId) {
         Intent intent = new Intent(this, ViewTermActivity.class);
-        startActivityForResult(intent, 0);
+        intent.putExtra("TermId", termId);
+        startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 
     public void openTermEditorForNewTerm(View view) {

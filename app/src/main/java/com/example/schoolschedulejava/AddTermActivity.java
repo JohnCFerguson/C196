@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.CalendarView;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
@@ -77,6 +78,24 @@ public class AddTermActivity extends AppCompatActivity {
             action = Intent.ACTION_INSERT;
             setTitle(R.string.new_term);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id) {
+            case android.R.id.home:
+                finishEditing();
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        finishEditing();
     }
 
     private void finishEditing() {
