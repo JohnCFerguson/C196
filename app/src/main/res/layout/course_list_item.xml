@@ -71,12 +71,36 @@
         android:textSize="14sp"
         android:layout_marginStart="50dp" />
 
-    <ListView
-        android:id="@+id/mentorList"
+    <TextView
+        android:id="@+id/tvMentorName"
         android:layout_width="wrap_content"
-        android:layout_height="177dp"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="32dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/mentor_name" />
+
+    <TextView
+        android:id="@+id/tvMentorEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
+        android:text="@string/email_address" />
+
+    <TextView
+        android:id="@+id/tvMentorPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="124dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="42dp"
+        android:text="@android:string/emptyPhoneNumber" />
 
     <TextView
         android:id="@+id/tvTermId"

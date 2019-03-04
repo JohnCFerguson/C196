@@ -7,13 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class courseWithMentorProvider extends ContentProvider {
+public class CourseWithMentorProvider extends ContentProvider {
 
-    private static final String AUTHORITY = "com.example.schoolschedulejava.courseswithmentorsprovider";
-    private static final String COURSES_PATH = "courses";
-    private static final String MENTORS_PATH = "mentors";
-    public static final Uri COURSESWITHMENTORS_URI =
-            Uri.parse("content://" + AUTHORITY + "/" + COURSES_PATH + "with" + MENTORS_PATH);
+    private static final String AUTHORITY = "com.example.schoolschedulejava.coursewithmentorprovider";
+    private static final String COURSE_WITH_MENTOR_PATH = "coursewithmentor";
+    public static final Uri COURSE_WITH_MENTOR_URI =
+            Uri.parse("content://" + AUTHORITY + "/" + COURSE_WITH_MENTOR_PATH);
 
     //Constant that identifies requested operation
     private static final int COURSE = 1;
@@ -23,13 +22,16 @@ public class courseWithMentorProvider extends ContentProvider {
             new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(AUTHORITY, COURSES_PATH, COURSE);
-        uriMatcher.addURI(AUTHORITY, COURSES_PATH + "/#", COURSE_ID);
+        uriMatcher.addURI(AUTHORITY, COURSE_WITH_MENTOR_PATH, COURSE);
+        uriMatcher.addURI(AUTHORITY, COURSE_WITH_MENTOR_PATH + "/#", COURSE_ID);
     }
 
     private SQLiteDatabase db;
 
-    private static final String COURSE_WITH_MENTOR_QUERY = "";
+    private static final String COURSE_WITH_MENTOR_QUERY =
+            "SELECT * FROM courses " +
+            "INNER JOIN mentors ON courses." + DBOpenHelper.MENTORID + " = mentors." + DBOpenHelper.MENTOR_ID + " " +
+            "WHERE termId = ?";
 
     @Override
     public boolean onCreate() {
@@ -43,8 +45,7 @@ public class courseWithMentorProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return db.query(DBOpenHelper.TABLE_COURSES, DBOpenHelper.COURSES_COLUMNS, selection, selectionArgs, null,
-                null, DBOpenHelper.COURSE_START + " ASC");
+        return db.rawQuery(COURSE_WITH_MENTOR_QUERY, selectionArgs);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class courseWithMentorProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         long id = db.insert(DBOpenHelper.TABLE_COURSES, null, values);
-        return Uri.parse(COURSES_PATH + "/" + id);
+        return Uri.parse(COURSE_WITH_MENTOR_PATH + "/" + id);
     }
 
     @Override

@@ -48,6 +48,10 @@
             android:name=".CourseProvider"
             android:authorities="com.example.schoolschedulejava.courseprovider"
             android:exported="false" />
+        <provider
+            android:name=".CourseWithMentorProvider"
+            android:authorities="com.example.schoolschedulejava.coursewithmentorprovider"
+            android:exported="false" />
     </application>
 
 </manifest>

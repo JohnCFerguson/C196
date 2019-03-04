@@ -44,14 +44,13 @@ public class ViewTermActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String selection = DBOpenHelper.TERMID + " = ?";
         String[] selectionArgs = {String.valueOf(intent.getLongExtra("TermId", 0))};
 
         return new CursorLoader(
                 this,   // Parent activity context
-                CourseProvider.COURSES_URI,       // Table to query
+                CourseWithMentorProvider.COURSE_WITH_MENTOR_URI,       // Table to query
                 null,     // Projection to return
-                selection,            // No selection clause
+                null,            // No selection clause
                 selectionArgs,            // No selection arguments
                 null             // Default sort order
         );
