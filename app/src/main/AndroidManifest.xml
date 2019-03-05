@@ -10,17 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ViewTermActivity"
-            android:label="@string/title_activity_view_term"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.schoolschedulejava.MainActivity" />
-        </activity>
-        <activity
             android:name=".MainActivity"
-            android:label="School Schedule">
+            android:label="@string/main_activity_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,9 +20,20 @@
         </activity>
         <activity
             android:name=".AddTermActivity"
-            android:label="AddTermActivity"
-            android:parentActivityName=".MainActivity"></activity>
-
+            android:label="@string/add_term_activity_label"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.schoolschedulejava.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ViewTermActivity"
+            android:label="@string/view_term_activity_label"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.schoolschedulejava.MainActivity" />
+        </activity>
         <provider
             android:name=".TermProvider"
             android:authorities="com.example.schoolschedulejava.termprovider"

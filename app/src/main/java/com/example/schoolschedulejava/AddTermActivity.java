@@ -24,6 +24,7 @@ public class AddTermActivity extends AppCompatActivity {
     private ArrayList<String> termsList;
     private Cursor termsQuery;
     private CalendarView cal;
+    String termTitle;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -36,7 +37,6 @@ public class AddTermActivity extends AppCompatActivity {
         termsQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
                 null, null, null, null);
 
-        String termTitle;
         try {
             do {
                 termsQuery.moveToNext();
@@ -95,24 +95,24 @@ public class AddTermActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        finishEditing();
+        //finishEditing();
     }
 
     private void finishEditing() {
         Calendar startDate = Calendar.getInstance();
         startDate.setTimeInMillis(cal.getDate());
         Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 5);
+        endDate.add(Calendar.MONTH, 4);
         endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.getActualMaximum(endDate.get(Calendar.MONTH)));
 
         switch(action) {
             case Intent.ACTION_INSERT:
-                /*if(termTitle.length() == 0){
+                if(termTitle.length() == 0){
                     setResult(RESULT_CANCELED);
                 }
                 else {
                     //insertTerm(termTitle,);
-                }*/
+                }
                 break;
             case Intent.ACTION_EDIT:
 

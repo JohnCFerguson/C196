@@ -15,8 +15,7 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class CourseCursorAdapter extends CursorAdapter
-    implements LoaderManager.LoaderCallbacks<Cursor>{
+public class CourseCursorAdapter extends CursorAdapter {
 
     CourseCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -48,35 +47,27 @@ public class CourseCursorAdapter extends CursorAdapter
 
         String termId = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.TERMID));
 
+        String mentorName = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_NAME));
+        String mentorEmail = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_EMAIL));
+        String mentorPhone = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_PHONE));
+
         TextView tvCourse = view.findViewById(R.id.tvCourse);
         TextView tvCourseDates = view.findViewById(R.id.tvCourseDates);
         TextView tvCourseStatus = view.findViewById(R.id.tvStatus);
         TextView tvTermId = view.findViewById(R.id.tvTermId);
 
+        TextView tvMentorName = view.findViewById(R.id.tvMentorName);
+        TextView tvMentorEmail = view.findViewById(R.id.tvMentorEmail);
+        TextView tvMentorPhone = view.findViewById(R.id.tvMentorPhone);
+
+
         tvCourse.setText(courseTitle);
         tvCourseDates.setText(courseDates);
         tvCourseStatus.setText(courseStatus);
+        //TermID can be removed before final publish
         tvTermId.setText(termId);
-
-        mCA = new MentorCursorAdapter(context, null, 0);
-        ListView list = view.findViewById(R.id.mentorList);
-        list.setAdapter(mCA);
-
-    }
-
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-
+        tvMentorName.setText(mentorName);
+        tvMentorEmail.setText(mentorEmail);
+        tvMentorPhone.setText(mentorPhone);
     }
 }

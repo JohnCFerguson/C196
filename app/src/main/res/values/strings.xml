@@ -10,8 +10,10 @@
     <string name="add_new_term">Add New Term</string>
     <string name="new_term">New Term</string>
     <string name="pick_date">Term Start</string>
-    <string name="title_activity_view_term">ViewTermActivity</string>
     <string name="status">Status:</string>
     <string name="mentor_name">mentorName</string>
     <string name="email_address">emailAddress</string>
+    <string name="main_activity_label">School Schedule</string>
+    <string name="add_term_activity_label">Add Term</string>
+    <string name="view_term_activity_label">View Term</string>
 </resources>
