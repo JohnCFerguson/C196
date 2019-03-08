@@ -21,6 +21,8 @@ public class CourseProvider extends ContentProvider {
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
+    public static final String COURSE_ITEM_TYPE = "course";
+
     static {
         uriMatcher.addURI(AUTHORITY, COURSES_PATH, COURSE);
         uriMatcher.addURI(AUTHORITY, COURSES_PATH + "/#", COURSE_ID);

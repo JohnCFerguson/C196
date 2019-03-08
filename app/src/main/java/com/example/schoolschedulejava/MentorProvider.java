@@ -21,6 +21,8 @@ public class MentorProvider extends ContentProvider {
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
+    public static final String MENTOR_ITEM_TYPE = "mentor";
+
     static {
         uriMatcher.addURI(AUTHORITY, MENTORS_PATH, MENTOR);
         uriMatcher.addURI(AUTHORITY, MENTORS_PATH + "/#", MENTOR_ID);

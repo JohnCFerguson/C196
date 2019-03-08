@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddTermActivity">
 
-    <EditText
+    <TextView
         android:id="@+id/termName"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Term Name" />
+        android:layout_width="414dp"
+        android:layout_height="47dp"
+        android:gravity="center"
+        android:text="@string/dummy_text"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/termStart"
-        android:layout_width="118dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="57dp"
+        android:layout_width="113dp"
+        android:layout_height="53dp"
         android:gravity="center"
-        android:text="Term Start:"
-        android:textSize="18sp" />
+        android:text="@string/term_start"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/noteTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termName"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="114dp" />
+        android:layout_width="411dp"
+        android:layout_height="332dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteTextView" />
+
+    <TextView
+        android:id="@+id/noteTextView"
+        android:layout_width="394dp"
+        android:layout_height="46dp"
+        android:gravity="start"
+        android:text="@string/term_start_note"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/termStart"
+        tools:layout_editor_absoluteY="100dp" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

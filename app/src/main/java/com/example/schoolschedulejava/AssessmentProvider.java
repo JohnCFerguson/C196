@@ -21,6 +21,8 @@ public class AssessmentProvider extends ContentProvider {
     private static final UriMatcher uriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
+    public static final String ASSESSMENT_ITEM_TYPE = "assessment";
+
     static {
         uriMatcher.addURI(AUTHORITY, ASSESSMENTS_PATH, ASSESSMENT);
         uriMatcher.addURI(AUTHORITY, ASSESSMENTS_PATH + "/#", ASSESSMENT_ID);

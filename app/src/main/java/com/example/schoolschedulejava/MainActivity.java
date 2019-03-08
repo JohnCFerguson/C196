@@ -10,8 +10,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void insertSampleData() {
-       Uri termUri = insertTerm("Term 1", "1/1/2019", "5/1/2019");
+       Uri termUri = insertTerm("Term 1", "1/1/2019", "6/30/2019");
        Uri mentorUri = insertMentor("Mentor Guy", "email@email.com", "123457890");
        Uri assessmentUri = insertAssessment("Course 1 Final Assessment", "Performance");
        Uri courseUri = insertCourse(Integer.parseInt(termUri.getLastPathSegment()),
@@ -213,5 +212,13 @@ public class MainActivity extends AppCompatActivity
     public void openTermEditorForNewTerm(View view) {
         Intent intent = new Intent(this, AddTermActivity.class);
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d("ActivityResult", requestCode + " " + resultCode);
+        if(requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+            restartLoader();
+        }
     }
 }
