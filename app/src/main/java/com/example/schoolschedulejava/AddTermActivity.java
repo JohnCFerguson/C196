@@ -19,14 +19,12 @@ import java.util.Calendar;
 
 public class AddTermActivity extends AppCompatActivity {
 
-    private static final String SET_DEBUG_TAG = "Jank is borked";
     private String action;
     private ArrayList<String> termsList;
     private Cursor termsQuery;
     private CalendarView cal;
     private TextView termTitle;
-    private Calendar startDate = Calendar.getInstance();
-    private Calendar endDate = Calendar.getInstance();
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -49,9 +47,6 @@ public class AddTermActivity extends AppCompatActivity {
                 catch (Exception e) {
                     Log.e(SET_DEBUG_TAG, "Error " + e.toString());
                 }
-                finally {
-                    termsQuery.close();
-                }
             }
         }
         catch (Exception e) {
@@ -62,7 +57,7 @@ public class AddTermActivity extends AppCompatActivity {
 
 
         termTitle = findViewById(R.id.termName);
-        termTitle.setText("Term " + (termsList.size() + 1));
+        termTitle.setText("Term" + (termsList.size() + 1));
         cal = findViewById(R.id.calendarView);
 
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -104,19 +99,7 @@ public class AddTermActivity extends AppCompatActivity {
     }
 
     private void finishEditing() {
-        String newTitle = termTitle.getText().toString().trim();
-        String strStartDate =  (startDate.get(Calendar.MONTH) + 1) +  " / " + startDate.getActualMinimum(Calendar.DAY_OF_MONTH) + " / " + startDate.get(Calendar.YEAR);
-        String strEndDate = (endDate.get(Calendar.MONTH) + 1) +  " / " + endDate.getActualMaximum(Calendar.DAY_OF_MONTH) + " / " + endDate.get(Calendar.YEAR);
 
-        switch(action) {
-            case Intent.ACTION_INSERT:
-                if(newTitle.length() == 0){
-                    setResult(RESULT_CANCELED);
-                }
-                else {
-                    insertTerm(newTitle, strStartDate, strEndDate);
-                }
-                break;
             case Intent.ACTION_EDIT:
                 break;
         }

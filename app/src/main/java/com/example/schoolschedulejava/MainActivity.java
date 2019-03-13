@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -21,19 +23,27 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+
+import static android.Manifest.permission_group.CALENDAR;
+
 
 public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>
-{
+        implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final String SET_DEBUG_TAG = "Jank is borked";
     private static final int EDITOR_REQUEST_CODE = 1001;
     private CursorAdapter cA;
+    private SimpleDateFormat dF = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //insertTerm("Term 1", "01/01/2019", "06/01/2019");
 
         cA = new TermCursorAdapter(this, null,0);
         ListView list = findViewById(android.R.id.list);
@@ -43,7 +53,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Log.d("Term ID:", cA.getItemId(position) + " ");
                 openTermViewForExistingTerm(view, cA.getItemId(position));
             }
         });
@@ -166,10 +175,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void insertSampleData() {
-       Uri termUri = insertTerm("Term 1", "1/1/2019", "6/30/2019");
-       Uri mentorUri = insertMentor("Mentor Guy", "email@email.com", "123457890");
-       Uri assessmentUri = insertAssessment("Course 1 Final Assessment", "Performance");
-       Uri courseUri = insertCourse(Integer.parseInt(termUri.getLastPathSegment()),
+        Calendar termStart = Calendar.getInstance();
+        termStart.set(termStart.get(Calendar.YEAR), termStart.get(Calendar.MONTH), 1);
+        Calendar termEnd = Calendar.getInstance();
+        termEnd.add(Calendar.MONTH, 5);
+        termEnd.set(termEnd.get(Calendar.YEAR), termEnd.get(Calendar.MONTH), termEnd.getActualMaximum(Calendar.DATE));
+
+        Uri termUri = insertTerm("Term 1", "1/1/2019", "6/30/2019");
+        Uri mentorUri = insertMentor("Mentor Guy", "email@email.com", "123457890");
+        Uri assessmentUri = insertAssessment("Course 1 Final Assessment", "Performance");
+        Uri courseUri = insertCourse(Integer.parseInt(termUri.getLastPathSegment()),
                Integer.parseInt(mentorUri.getLastPathSegment()),"Course 1", "1/1/2019",
                "1/31/2019", "Active", assessmentUri.getLastPathSegment(), "This course is tough");
 
@@ -209,9 +224,46 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void openTermEditorForNewTerm(View view) {
-        Intent intent = new Intent(this, AddTermActivity.class);
-        startActivityForResult(intent, EDITOR_REQUEST_CODE);
+        ArrayList<String> termsList = new ArrayList<>();
+        Cursor termsQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
+                null, null, null, null);
+        String termTitle = "";
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+
+        try {
+            while(termsQuery.moveToNext()) {
+                String term = termsQuery.getString(termsQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
+                Log.d("AddTermActivity", term);
+                try {
+                    termsList.add(term);
+                }
+                catch (Exception e) {
+                    Log.e(SET_DEBUG_TAG, "Error " + e.toString());
+                }
+            }
+        }
+        catch (Exception e) {
+            Log.e(SET_DEBUG_TAG, "Error going to next " + e.toString());
+        }
+
+        if(termsList.size() == 0) {
+            startDate.set(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), 1);
+            endDate.setTime(startDate.getTime());
+        }
+        else {
+            startDate.set(termsQuery.getString)
+        }
+
+        endDate.add(Calendar.MONTH, 5);
+        endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.getActualMaximum(Calendar.DATE));
+        termTitle = "Term " + termsList.size();
+        String strStartDate =  (startDate.get(Calendar.MONTH) + 1) +  " / " + startDate.getActualMinimum(Calendar.DAY_OF_MONTH) + " / " + startDate.get(Calendar.YEAR);
+        String strEndDate = (endDate.get(Calendar.MONTH) + 1) +  " / " + endDate.getActualMaximum(Calendar.DAY_OF_MONTH) + " / " + endDate.get(Calendar.YEAR);
+
+        insertTerm(termTitle, strStartDate, strEndDate);
     }
 
     @Override
