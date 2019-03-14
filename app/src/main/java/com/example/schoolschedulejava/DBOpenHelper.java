@@ -59,8 +59,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_TERMS + " (" +
                     TERM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TERM_TITLE + " TEXT, " +
-                    TERM_START + " DATE, " +
-                    TERM_END + " DATE)";
+                    TERM_START + " TEXT, " +
+                    TERM_END + " TEXT)";
 
     private static final String TABLE_CREATE_MENTORS =
             "CREATE TABLE " + TABLE_MENTORS + " (" +

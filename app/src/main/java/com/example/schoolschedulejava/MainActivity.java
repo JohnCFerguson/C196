@@ -23,9 +23,11 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.Manifest.permission_group.CALENDAR;
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity
         values.put(DBOpenHelper.TERM_END, termEnd);
         Uri termUri = getContentResolver().insert(TermProvider.TERMS_URI, values);
         Log.d("MainActivity", "Inserted Term " + termUri.getLastPathSegment());
+
+        restartLoader();
 
         return termUri;
     }
@@ -225,7 +229,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void openTermEditorForNewTerm(View view) {
+    public void openTermEditorForNewTerm(View view) throws ParseException {
         ArrayList<String> termsList = new ArrayList<>();
         Cursor termsQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
                 null, null, null, null);
@@ -249,19 +253,25 @@ public class MainActivity extends AppCompatActivity
             Log.e(SET_DEBUG_TAG, "Error going to next " + e.toString());
         }
 
-        if(termsList.size() == 0) {
-            startDate.set(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), 1);
-            endDate.setTime(startDate.getTime());
+        if(termsList.size() != 0) {
+            termsQuery.moveToLast();
+            Log.d("StringToDate", termsQuery.getString(termsQuery.getColumnIndex(DBOpenHelper.TERM_END)));
+            Date date = new SimpleDateFormat("dd-MMM-yyyy").parse(
+                    termsQuery.getString(
+                            termsQuery.getColumnIndex(DBOpenHelper.TERM_END)));
+
+            startDate.setTime(date);
         }
-        else {
-            startDate.set(termsQuery.getString)
-        }
+
+        startDate.set(startDate.get(Calendar.YEAR), (startDate.get(Calendar.MONTH) + 1), 1);
+        endDate.setTime(startDate.getTime());
 
         endDate.add(Calendar.MONTH, 5);
         endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.getActualMaximum(Calendar.DATE));
-        termTitle = "Term " + termsList.size();
-        String strStartDate =  (startDate.get(Calendar.MONTH) + 1) +  " / " + startDate.getActualMinimum(Calendar.DAY_OF_MONTH) + " / " + startDate.get(Calendar.YEAR);
-        String strEndDate = (endDate.get(Calendar.MONTH) + 1) +  " / " + endDate.getActualMaximum(Calendar.DAY_OF_MONTH) + " / " + endDate.get(Calendar.YEAR);
+        termTitle = "Term " + (termsList.size() + 1);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        String strStartDate =  sdf.format(startDate.getTime());
+        String strEndDate = sdf.format(endDate.getTime());
 
         insertTerm(termTitle, strStartDate, strEndDate);
     }
