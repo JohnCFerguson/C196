@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
     private static final String SET_DEBUG_TAG = "Jank is borked";
     private static final int EDITOR_REQUEST_CODE = 1001;
     private CursorAdapter cA;
-    private SimpleDateFormat dF = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -229,7 +228,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void openTermEditorForNewTerm(View view) throws ParseException {
+    public void addNewTerm(View view) throws ParseException {
         ArrayList<String> termsList = new ArrayList<>();
         Cursor termsQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
                 null, null, null, null);

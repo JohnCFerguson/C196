@@ -5,7 +5,9 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ViewTermActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -22,6 +25,7 @@ public class ViewTermActivity extends AppCompatActivity
     private CursorAdapter cA;
     Intent intent;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +35,28 @@ public class ViewTermActivity extends AppCompatActivity
 
         Log.d("Term ID in View Term: ", intent.getLongExtra("TermId", 0) + "");
 
+        String termId = intent.getLongExtra("TermId", 0) + "";
+
+        Cursor termQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
+                DBOpenHelper.TERM_ID + " = " + termId, null, null, null);
+
+        String termName = "";
+        String termDates = "";
+
+        while(termQuery.moveToNext()) {
+            termName = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
+            termDates = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_START)) + " - " +
+                termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_END));
+        }
+
+        TextView termNameView = findViewById(R.id.termTitle);
+        TextView termDatesVew = findViewById(R.id.termDates);
+
+        termNameView.setText(termName);
+        termDatesVew.setText(termDates);
+
         cA = new CourseCursorAdapter(this, null,0);
-        ListView list = findViewById(android.R.id.list);
+        ListView list = findViewById(R.id.listView);
         list.setAdapter(cA);
 
         getLoaderManager().initLoader(0, null, this);

@@ -18,4 +18,7 @@
     <string name="view_term_activity_label">View Term</string>
     <string name="term_start">Term Start:</string>
     <string name="term_start_note">Note: Term will start on the first day of the selected Month</string>
+    <string name="add_term">Add Term</string>
+    <string name="add_course">Add Course</string>
+    <string name="term_title">termTitle</string>
 </resources>
