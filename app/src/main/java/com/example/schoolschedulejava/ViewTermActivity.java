@@ -21,7 +21,7 @@ import android.widget.TextView;
 public class ViewTermActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
-
+    private static final int EDITOR_REQUEST_CODE = 1002;
     private CursorAdapter cA;
     Intent intent;
 
@@ -88,5 +88,11 @@ public class ViewTermActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         cA.swapCursor(null);
+    }
+
+    public void openAddCourseViewForExistingTerm(View view, long termId) {
+        Intent intent = new Intent(this, ViewTermActivity.class);
+        intent.putExtra("TermId", termId);
+        startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 }

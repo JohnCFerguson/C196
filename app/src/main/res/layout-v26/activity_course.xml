@@ -13,12 +13,12 @@
         android:layout_width="414dp"
         android:layout_height="47dp"
         android:gravity="center"
-        android:inputType="text"
+        android:importantForAutofill="no"
+        android:inputType=""
         android:text="@string/course_name"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/courseStartLbl"
@@ -76,39 +76,12 @@
         android:id="@+id/mentorName"
         android:layout_width="414dp"
         android:layout_height="47dp"
-        android:gravity="start"
+        android:gravity="center"
         android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:text="@string/mentor_name"
+        android:inputType=""
+        android:text="@string/course_name"
         android:textSize="18sp"
-        android:hint="@string/mentor_name"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorLbl" />
-
-    <EditText
-        android:id="@+id/mentorEmail"
-        android:layout_width="414dp"
-        android:layout_height="47dp"
-        android:gravity="start"
-        android:importantForAutofill="no"
-        android:inputType="phone"
-        android:text="@string/mentor_email"
-        android:textSize="18sp"
-        android:hint="@string/mentor_email"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorName" />
-
-    <EditText
-        android:id="@+id/mentorPhone"
-        android:layout_width="414dp"
-        android:layout_height="47dp"
-        android:gravity="start"
-        android:importantForAutofill="no"
-        android:inputType="phone"
-        android:text="@string/mentor_phone"
-        android:textSize="18sp"
-        android:hint="@string/mentor_phone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorEmail" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -21,4 +21,9 @@
     <string name="add_term">Add Term</string>
     <string name="add_course">Add Course</string>
     <string name="term_title">termTitle</string>
+    <string name="course_end">Course End:</string>
+    <string name="course_name">Course Name</string>
+    <string name="course_mentor">Course Mentor</string>
+    <string name="mentor_email">Mentor Email</string>
+    <string name="mentor_phone">Mentor Phone</string>
 </resources>
