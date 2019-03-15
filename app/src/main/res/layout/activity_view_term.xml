@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ViewT">
+    tools:context=".ViewTermActivity">
 
     <TextView
         android:id="@+id/termTitle"
@@ -28,7 +28,8 @@
         android:text="@string/dummy_text"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/termTitle"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="124dp" />
 
     <ListView
         android:id="@+id/listView"
@@ -45,7 +46,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:onClick="openTermEditorForNewTerm"
+        android:onClick="openAddCourseViewForExistingTerm"
         android:text="@string/add_course"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"

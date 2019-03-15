@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,7 +24,8 @@ public class ViewTermActivity extends AppCompatActivity
 
     private static final int EDITOR_REQUEST_CODE = 1002;
     private CursorAdapter cA;
-    Intent intent;
+    private Intent intent;
+    private int termId;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -35,7 +37,7 @@ public class ViewTermActivity extends AppCompatActivity
 
         Log.d("Term ID in View Term: ", intent.getLongExtra("TermId", 0) + "");
 
-        String termId = intent.getLongExtra("TermId", 0) + "";
+        termId = (int) intent.getLongExtra("TermId", 0);
 
         Cursor termQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
                 DBOpenHelper.TERM_ID + " = " + termId, null, null, null);
@@ -43,11 +45,17 @@ public class ViewTermActivity extends AppCompatActivity
         String termName = "";
         String termDates = "";
 
-        while(termQuery.moveToNext()) {
-            termName = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
-            termDates = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_START)) + " - " +
-                termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_END));
+        try {
+            while(termQuery.moveToNext()) {
+                termName = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
+                termDates = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_START)) + " - " +
+                        termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_END));
+            }
         }
+        catch (Exception e) {
+            Log.e("ViewTermActivity", "Error moving to next " + e);
+        }
+
 
         TextView termNameView = findViewById(R.id.termTitle);
         TextView termDatesVew = findViewById(R.id.termDates);
@@ -90,9 +98,17 @@ public class ViewTermActivity extends AppCompatActivity
         cA.swapCursor(null);
     }
 
-    public void openAddCourseViewForExistingTerm(View view, long termId) {
+    public void openAddCourseViewForExistingTerm(View view) {
         Intent intent = new Intent(this, ViewTermActivity.class);
         intent.putExtra("TermId", termId);
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d("ViewTermActivityResult", requestCode + " " + resultCode);
+        if(requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+            restartLoader();
+        }
     }
 }

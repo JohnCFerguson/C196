@@ -78,8 +78,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String TABLE_CREATE_COURSES =
             "CREATE TABLE " + TABLE_COURSES + " (" +
                     COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    TERMID + " TEXT, " +
-                    MENTORID + " TEXT, " +
+                    TERMID + " INTEGER, " +
+                    MENTORID + " INTEGER, " +
                     COURSE_TITLE + " TEXT, " +
                     COURSE_START + " TEXT, " +
                     COURSE_END + " TEXT, " +
