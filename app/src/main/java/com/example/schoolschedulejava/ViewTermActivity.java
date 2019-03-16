@@ -25,7 +25,7 @@ public class ViewTermActivity extends AppCompatActivity
     private static final int EDITOR_REQUEST_CODE = 1002;
     private CursorAdapter cA;
     private Intent intent;
-    private int termId;
+    private long termId;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -37,7 +37,7 @@ public class ViewTermActivity extends AppCompatActivity
 
         Log.d("Term ID in View Term: ", intent.getLongExtra("TermId", 0) + "");
 
-        termId = (int) intent.getLongExtra("TermId", 0);
+        termId = intent.getLongExtra("TermId", 0);
 
         Cursor termQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
                 DBOpenHelper.TERM_ID + " = " + termId, null, null, null);
@@ -99,7 +99,7 @@ public class ViewTermActivity extends AppCompatActivity
     }
 
     public void openAddCourseViewForExistingTerm(View view) {
-        Intent intent = new Intent(this, ViewTermActivity.class);
+        Intent intent = new Intent(this, AddCourseActivity.class);
         intent.putExtra("TermId", termId);
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }

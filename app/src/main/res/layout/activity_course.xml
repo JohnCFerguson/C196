@@ -1,114 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarStyle="insideOverlay"
     tools:context=".AddCourseActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/courseName"
-        android:layout_width="414dp"
-        android:layout_height="47dp"
-        android:gravity="center"
-        android:inputType="text"
-        android:text="@string/course_name"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/courseName"
+            android:layout_width="414dp"
+            android:layout_height="47dp"
+            android:gravity="center"
+            android:hint="@string/course_name"
+            android:importantForAutofill="no"
+            android:inputType=""
+            android:text="@string/course_name"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/courseStartLbl"
+            android:layout_width="113dp"
+            android:layout_height="53dp"
+            android:gravity="center"
+            android:text="@string/term_start"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/courseStartLbl"
-        android:layout_width="113dp"
-        android:layout_height="53dp"
-        android:gravity="center"
-        android:text="@string/term_start"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseName"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        <CalendarView
+            android:id="@+id/courseStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <CalendarView
-        android:id="@+id/courseStart"
-        android:layout_width="416dp"
-        android:layout_height="311dp"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/courseStartLbl"
-        tools:layout_editor_absoluteY="100dp" />
+        <TextView
+            android:id="@+id/courseEndLbl"
+            android:layout_width="113dp"
+            android:layout_height="53dp"
+            android:gravity="center"
+            android:text="@string/course_end"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/courseEndLbl"
-        android:layout_width="113dp"
-        android:layout_height="53dp"
-        android:gravity="center"
-        android:text="@string/course_end"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/courseStart"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        <CalendarView
+            android:id="@+id/courseEnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <CalendarView
-        android:id="@+id/courseEnd"
-        android:layout_width="416dp"
-        android:layout_height="311dp"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/courseEndLbl" />
-    
-    <TextView 
-        android:id="@+id/mentorLbl"
-        android:layout_width="113dp"
-        android:layout_height="53dp"
-        android:gravity="center"
-        android:text="@string/course_mentor"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseEnd"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        <TextView
+            android:id="@+id/mentorLbl"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:gravity="start"
+            android:text="@string/course_mentor_information"
+            android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/mentorName"
-        android:layout_width="414dp"
-        android:layout_height="47dp"
-        android:gravity="start"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:text="@string/mentor_name"
-        android:textSize="18sp"
-        android:hint="@string/mentor_name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorLbl" />
+        <EditText
+            android:id="@+id/mentorName"
+            android:layout_width="414dp"
+            android:layout_height="47dp"
+            android:gravity="start"
+            android:hint="@string/mentor_name"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:text="@string/mentor_name"
+            android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/mentorEmail"
-        android:layout_width="414dp"
-        android:layout_height="47dp"
-        android:gravity="start"
-        android:importantForAutofill="no"
-        android:inputType="phone"
-        android:text="@string/mentor_email"
-        android:textSize="18sp"
-        android:hint="@string/mentor_email"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorName" />
+        <EditText
+            android:id="@+id/mentorEmail"
+            android:layout_width="414dp"
+            android:layout_height="47dp"
+            android:gravity="start"
+            android:hint="@string/mentor_email"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:text="@string/mentor_email"
+            android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/mentorPhone"
-        android:layout_width="414dp"
-        android:layout_height="47dp"
-        android:gravity="start"
-        android:importantForAutofill="no"
-        android:inputType="phone"
-        android:text="@string/mentor_phone"
-        android:textSize="18sp"
-        android:hint="@string/mentor_phone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mentorEmail" />
+        <EditText
+            android:id="@+id/mentorPhone"
+            android:layout_width="414dp"
+            android:layout_height="47dp"
+            android:gravity="start"
+            android:hint="@string/mentor_phone"
+            android:importantForAutofill="no"
+            android:inputType="phone"
+            android:text="@string/mentor_phone"
+            android:textSize="18sp" />
 
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+</ScrollView>

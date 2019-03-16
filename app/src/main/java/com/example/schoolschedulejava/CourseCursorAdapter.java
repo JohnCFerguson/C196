@@ -54,7 +54,7 @@ public class CourseCursorAdapter extends CursorAdapter {
         TextView tvCourse = view.findViewById(R.id.tvCourse);
         TextView tvCourseDates = view.findViewById(R.id.tvCourseDates);
         TextView tvCourseStatus = view.findViewById(R.id.tvStatus);
-        TextView tvTermId = view.findViewById(R.id.tvTermId);
+        //TextView tvTermId = view.findViewById(R.id.tvTermId);
 
         TextView tvMentorName = view.findViewById(R.id.tvMentorName);
         TextView tvMentorEmail = view.findViewById(R.id.tvMentorEmail);
@@ -65,7 +65,7 @@ public class CourseCursorAdapter extends CursorAdapter {
         tvCourseDates.setText(courseDates);
         tvCourseStatus.setText(courseStatus);
         //TermID can be removed before final publish
-        tvTermId.setText(termId);
+        //tvTermId.setText(termId);
         tvMentorName.setText(mentorName);
         tvMentorEmail.setText(mentorEmail);
         tvMentorPhone.setText(mentorPhone);

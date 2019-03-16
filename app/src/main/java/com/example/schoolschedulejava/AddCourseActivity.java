@@ -1,7 +1,9 @@
 package com.example.schoolschedulejava;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -14,7 +16,6 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddCourseActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class AddCourseActivity extends AppCompatActivity {
     private Calendar startDate = Calendar.getInstance();
     private Calendar endDate = Calendar.getInstance();
     private Intent intent;
-    private int termId;
+    private long termId;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -38,7 +39,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        termId = (int) intent.getLongExtra("TermId", 0);
+        termId =  intent.getLongExtra("TermId", 0);
 
         courseName = findViewById(R.id.courseName);
         CalendarView courseStart = findViewById(R.id.courseStart);
@@ -114,6 +115,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 else {
                     insertCourse(termId, mentorId, newCourse, strStartDate, strEndDate,
                             courseStatus, courseAssessments, courseNotes);
+                    setResult(RESULT_OK);
                 }
                 break;
             case Intent.ACTION_EDIT:
@@ -150,7 +152,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 Uri mentorUri = getContentResolver().insert(MentorProvider.MENTORS_URI, values);
 
                 mentorId = Integer.parseInt(mentorUri.getLastPathSegment());
-                Log.d("MainActivity", "Inserted Mentor " + mentorUri.getLastPathSegment());
+                Log.d("AddCourseActivity", "Inserted Mentor " + mentorUri.getLastPathSegment());
             }
         }
         catch (NullPointerException e) {
@@ -160,7 +162,7 @@ public class AddCourseActivity extends AppCompatActivity {
         return mentorId;
     }
 
-    private void insertCourse(int termId, int mentorId, String courseTitle, String courseStart,
+    private void insertCourse(long termId, int mentorId, String courseTitle, String courseStart,
                              String courseEnd, String courseStatus, String courseAssessments,
                              String courseNotes) {
         ContentValues values = new ContentValues();
@@ -176,4 +178,5 @@ public class AddCourseActivity extends AppCompatActivity {
         Log.d("AddCourseActivity", "Inserted Course " + courseUri.getLastPathSegment());
 
     }
+
 }
