@@ -64,8 +64,6 @@ public class CourseCursorAdapter extends CursorAdapter {
         tvCourse.setText(courseTitle);
         tvCourseDates.setText(courseDates);
         tvCourseStatus.setText(courseStatus);
-        //TermID can be removed before final publish
-        //tvTermId.setText(termId);
         tvMentorName.setText(mentorName);
         tvMentorEmail.setText(mentorEmail);
         tvMentorPhone.setText(mentorPhone);
