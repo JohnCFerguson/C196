@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.schoolschedulejava.ViewTermActivity" />
         </activity>
+        <activity
+            android:name=".ViewCourseActivity"
+            android:label="@string/course_view"
+            android:parentActivityName=".ViewCourseActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.schoolschedulejava.ViewTermActivity" />
+        </activity>
         <provider
             android:name=".TermProvider"
             android:authorities="com.example.schoolschedulejava.termprovider"

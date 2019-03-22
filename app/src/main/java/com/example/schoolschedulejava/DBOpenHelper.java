@@ -90,6 +90,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY (" + MENTORID + ") REFERENCES " + TABLE_MENTORS+ "(" + MENTOR_ID + ")" +
                     ")";
 
+    private static final String POPULATE_MENTOR_TABLE =
+            "INSTERT INTO " + TABLE_MENTORS +
+
+    private static final String POPULATE_COURESES_TABLE =
+            "INSERT INTO " + TABLE_COURSES + " VALUES (Intro"
 
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -101,6 +106,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE_MENTORS);
         db.execSQL(TABLE_CREATE_ASSESSMENTS);
         db.execSQL(TABLE_CREATE_COURSES);
+
+        db.execSQL()
     }
 
     @Override

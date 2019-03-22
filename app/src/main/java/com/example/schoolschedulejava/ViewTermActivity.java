@@ -15,9 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ViewTermActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -45,6 +50,8 @@ public class ViewTermActivity extends AppCompatActivity
         String termName = "";
         String termDates = "";
 
+        ArrayList<String> courseList = new ArrayList<String>();
+
         try {
             while(termQuery.moveToNext()) {
                 termName = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
@@ -56,7 +63,6 @@ public class ViewTermActivity extends AppCompatActivity
             Log.e("ViewTermActivity", "Error moving to next " + e);
         }
 
-
         TextView termNameView = findViewById(R.id.termTitle);
         TextView termDatesVew = findViewById(R.id.termDates);
 
@@ -66,6 +72,16 @@ public class ViewTermActivity extends AppCompatActivity
         cA = new CourseCursorAdapter(this, null,0);
         ListView list = findViewById(R.id.listView);
         list.setAdapter(cA);
+        list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                openCourseViewForExistingCourse(view, cA.getItemId(position));
+            }
+        });
+
+
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -101,6 +117,12 @@ public class ViewTermActivity extends AppCompatActivity
     public void openAddCourseViewForExistingTerm(View view) {
         Intent intent = new Intent(this, AddCourseActivity.class);
         intent.putExtra("TermId", termId);
+        startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    }
+
+    public void openCourseViewForExistingCourse(View view, long courseId) {
+        Intent intent = new Intent(this, ViewCourseActivity.class);
+        intent.putExtra("CourseId", courseId);
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 

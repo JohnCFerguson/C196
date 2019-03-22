@@ -1,9 +1,7 @@
 package com.example.schoolschedulejava;
 
-import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -35,7 +33,7 @@ public class AddCourseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course);
+        setContentView(R.layout.activity_add_course);
 
         intent = getIntent();
 
