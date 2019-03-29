@@ -3,7 +3,8 @@
     package="com.example.schoolschedulejava">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="School Schedule"
         android:roundIcon="@mipmap/ic_launcher_round"
