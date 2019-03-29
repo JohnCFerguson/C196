@@ -6,6 +6,9 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
+
+import java.util.logging.Logger;
 
 public class CourseWithMentorProvider extends ContentProvider {
 
@@ -29,9 +32,8 @@ public class CourseWithMentorProvider extends ContentProvider {
     private SQLiteDatabase db;
 
     private static final String COURSE_WITH_MENTOR_QUERY =
-            "SELECT * FROM courses " +
-            "INNER JOIN mentors ON courses." + DBOpenHelper.MENTORID + " = mentors." + DBOpenHelper.MENTOR_ID + " " +
-            "WHERE termId = ?";
+            "SELECT * FROM courses INNER JOIN mentors ON courses." + DBOpenHelper.MENTORID +
+                    " = mentors." + DBOpenHelper.MENTOR_ID + " WHERE ";
 
     @Override
     public boolean onCreate() {
@@ -45,7 +47,8 @@ public class CourseWithMentorProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return db.rawQuery(COURSE_WITH_MENTOR_QUERY, selectionArgs);
+        Log.d("CourseWithMentorQuery", COURSE_WITH_MENTOR_QUERY + selection);
+        return db.rawQuery(COURSE_WITH_MENTOR_QUERY + selection, selectionArgs);
     }
 
     @Override

@@ -10,8 +10,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,11 +21,13 @@ import java.util.Calendar;
 public class AddCourseActivity extends AppCompatActivity {
 
     private static final String SET_DEBUG_TAG = "Jank is borked in AddCourseActivity";
+    private static final String[] status = {"Planning to Take", "In Progress", "Complete", "Incomplete"};
     private String action;
     private EditText courseName;
     private EditText mentorName;
     private EditText mentorEmail;
     private EditText mentorPhone;
+    private Spinner statusSpinner;
     private Calendar startDate = Calendar.getInstance();
     private Calendar endDate = Calendar.getInstance();
     private Intent intent;
@@ -39,13 +43,17 @@ public class AddCourseActivity extends AppCompatActivity {
 
         termId =  intent.getLongExtra("TermId", 0);
 
+
         courseName = findViewById(R.id.courseName);
         CalendarView courseStart = findViewById(R.id.courseStart);
         CalendarView courseEnd = findViewById(R.id.courseEnd);
         mentorName = findViewById(R.id.mentorName);
         mentorEmail = findViewById(R.id.mentorEmail);
         mentorPhone = findViewById(R.id.mentorPhone);
+        statusSpinner = findViewById(R.id.statusSpinner);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, status);
+        statusSpinner.setAdapter(adapter);
 
         courseStart.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -101,7 +109,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
         int mentorId = getMentorId();
 
-        String courseStatus = "Planning to Take";
+        String courseStatus = statusSpinner.getSelectedItem().toString();
         String courseAssessments = "";
         String courseNotes = "";
 
@@ -135,7 +143,6 @@ public class AddCourseActivity extends AppCompatActivity {
 
         Cursor mentorQuery = getContentResolver().query(MentorProvider.MENTORS_URI, DBOpenHelper.MENTORS_COLUMNS,
                 selection, selectionArgs, null, null);
-
 
         try{
             if(mentorQuery.moveToNext()){

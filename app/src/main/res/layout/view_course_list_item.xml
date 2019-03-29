@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:id="@+id/imageDocIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@string/bookmark_icon"
+            android:src="@drawable/ic_book_open_outline_black_48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/courseTitle"
+            android:layout_width="360dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:gravity="start"
+            android:singleLine="true"
+            android:text="@string/dummy_text"
+            android:textColor="@color/list_item_text"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@+id/imageDocIcon"
+            app:layout_constraintStart_toEndOf="@+id/imageDocIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/courseDates"
+            android:layout_width="360dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="12dp"
+            android:gravity="start"
+            android:singleLine="true"
+            android:text="@string/dummy_text"
+            android:textColor="@color/list_item_text"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@+id/imageDocIcon"
+            app:layout_constraintTop_toBottomOf="@+id/courseTitle"
+            android:layout_marginStart="12dp" />
+
+        <TextView
+            android:id="@+id/statusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="2dp"
+            android:textSize="14sp"
+            android:text="@string/status"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/courseDates" />
+
+        <TextView
+            android:id="@+id/cvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:padding="2dp"
+            android:textSize="14sp"
+            android:text="@string/dummy_text"
+            app:layout_constraintLeft_toRightOf="@id/statusLabel"
+            app:layout_constraintTop_toBottomOf="@id/courseDates"
+            android:layout_marginStart="12dp" />
+
+        <TextView
+            android:id="@+id/cvMentorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:text="@string/mentor_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvStatus" />
+
+        <TextView
+            android:id="@+id/cvMentorEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:text="@string/email_address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvMentorName" />
+
+        <TextView
+            android:id="@+id/cvMentorPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:text="@android:string/emptyPhoneNumber"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvMentorEmail" />
+
+        <TextView
+            android:id="@+id/cvAssessments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            app:layout_constraintTop_toBottomOf="@id/cvMentorPhone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/cvNotesList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            app:layout_constraintTop_toBottomOf="@id/cvAssessments"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <EditText
+            android:id="@+id/cvNotes"
+            android:labelFor="@+id/cvNotes"
+            android:layout_width="402dp"
+            android:layout_height="505dp"
+            android:ems="10"
+            android:gravity="start"
+            android:inputType="text"
+            android:text="@string/notes"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvNotesList"
+            android:importantForAutofill="no" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

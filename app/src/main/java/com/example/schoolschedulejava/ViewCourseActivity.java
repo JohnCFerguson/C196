@@ -1,88 +1,104 @@
 package com.example.schoolschedulejava;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.CursorAdapter;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ListView;
 
-import java.util.ArrayList;
+
+import java.text.SimpleDateFormat;
+
 
 public class ViewCourseActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final int EDITOR_REQUEST_CODE = 1002;
+    private String action;
     private CursorAdapter cA;
     private Intent intent;
+    private String notes;
     private long courseId;
+    private EditText cvNotes;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_course);
+        setContentView(R.layout.activity_view_course);
 
         intent = getIntent();
 
-
-        Log.d("Term ID in View Term: ", intent.getLongExtra("CourseId", 0) + "");
+        Log.d("Course ID ViewCourse: ", intent.getLongExtra("CourseId", 0) + "");
+        //Log.d("Course Name ViewCourse", intent.getStringExtra("CourseName"));
 
         courseId = intent.getLongExtra("CourseId", 0);
 
-        String selection = DBOpenHelper.TERM_ID + " = ?";
-        String[] selectionArgs = {courseId + ""};
+        cvNotes = findViewById(R.id.cvNotes);
 
-        Cursor courseQuery = getContentResolver().query(CourseProvider.COURSES_URI, DBOpenHelper.COURSES_COLUMNS,
-                selection, selectionArgs, null, null);
-
-        String courseName = "";
-        String courseDates = "";
-        DBOpenHelper.Course
-
-        ArrayList<String> courseList = new ArrayList<String>();
-
-        try {
-            while(courseQuery.moveToNext()) {
-                courseName = courseQuery.getString(courseQuery.getColumnIndex(DBOpenHelper.COURSE_TITLE));
-                courseDates = courseQuery.getString(courseQuery.getColumnIndex(DBOpenHelper.COURSE_START)) + " - " +
-                        courseQuery.getString(courseQuery.getColumnIndex(DBOpenHelper.COURSE_END));
-
-            }
-        }
-        catch (Exception e) {
-            Log.e("ViewTermActivity", "Error moving to next " + e);
-        }
-
-        TextView termNameView = findViewById(R.id.termTitle);
-        TextView termDatesVew = findViewById(R.id.termDates);
-
-        termNameView.setText(termName);
-        termDatesVew.setText(termDates);
-
-        cA = new CourseCursorAdapter(this, null,0);
-
+        cA = new ViewCourseCursorAdapter(this, null,0);
+        //cA = new TermCursorAdapter(this, null,0);
+        ListView list = findViewById(R.id.cvList);
+        list.setAdapter(cA);
 
         getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
+    public void onBackPressed(){
+        finishEditing();
+    }
+
+    private void finishEditing() {
+        notes = cvNotes.getText().toString();
+        if(notes.length() == 0){
+            setResult(RESULT_CANCELED);
+        }
+        else {
+            updateNotes(courseId, notes);
+            setResult(RESULT_OK);
+        }
+        finish();
+    }
+
+    private void updateNotes(long courseId, String note) {
+        String selection = "courses." + DBOpenHelper.COURSE_TITLE + " = ?";
+        String[] selectionArgs = {String.valueOf(courseId)};
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.COURSE_NOTES, note);
+        int noteInserted = getContentResolver().update(CourseProvider.COURSES_URI, values, selection, selectionArgs);
+        Log.d("ViewCourseActivity", "Note Inserted " + noteInserted);
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+        String selection = "courses." + DBOpenHelper.COURSE_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(intent.getLongExtra("CourseId", 0))};
+
+        return new CursorLoader(
+                this,   // Parent activity context
+                CourseWithMentorProvider.COURSE_WITH_MENTOR_URI,       // Table to query
+                null,     // Projection to return
+                selection,
+                selectionArgs,
+                null             // Default sort order
+        );
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        cA.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        cA.swapCursor(null);
     }
 }

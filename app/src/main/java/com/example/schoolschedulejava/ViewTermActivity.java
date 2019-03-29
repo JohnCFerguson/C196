@@ -50,8 +50,6 @@ public class ViewTermActivity extends AppCompatActivity
         String termName = "";
         String termDates = "";
 
-        ArrayList<String> courseList = new ArrayList<String>();
-
         try {
             while(termQuery.moveToNext()) {
                 termName = termQuery.getString(termQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
@@ -77,7 +75,8 @@ public class ViewTermActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                openCourseViewForExistingCourse(view, cA.getItemId(position));
+                //Log.d("ItemClicked", );
+                openCourseViewForExistingCourse(view, id);
             }
         });
 
@@ -92,13 +91,14 @@ public class ViewTermActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String selection = "termId" +" = ?";
         String[] selectionArgs = {String.valueOf(intent.getLongExtra("TermId", 0))};
 
         return new CursorLoader(
                 this,   // Parent activity context
                 CourseWithMentorProvider.COURSE_WITH_MENTOR_URI,       // Table to query
                 null,     // Projection to return
-                null,            // No selection clause
+                selection,            // No selection clause
                 selectionArgs,            // No selection arguments
                 null             // Default sort order
         );

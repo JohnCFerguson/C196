@@ -28,4 +28,8 @@
     <string name="mentor_phone">Mentor Phone</string>
     <string name="course_mentor_information">Course Mentor Information</string>
     <string name="course_view">Course View</string>
+    <string name="course_status">Course Status:</string>
+    <string name="assessments">Assessments</string>
+    <string name="assessments_info">Assessments Info:</string>
+    <string name="notes">Notes</string>
 </resources>

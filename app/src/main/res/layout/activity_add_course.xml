@@ -50,6 +50,20 @@
             android:layout_height="match_parent" />
 
         <TextView
+            android:id="@+id/statusLbl"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:gravity="start"
+            android:text="@string/course_status"
+            android:textSize="18sp" />
+
+
+        <Spinner
+            android:id="@+id/statusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="53dp" />
+
+        <TextView
             android:id="@+id/mentorLbl"
             android:layout_width="match_parent"
             android:layout_height="53dp"

@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity
     private static final int EDITOR_REQUEST_CODE = 1001;
     private CursorAdapter cA;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                openTermViewForExistingTerm(view, cA.getItemId(position));
+                openTermViewForExistingTerm(view, id);
             }
         });
 
