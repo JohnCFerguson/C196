@@ -32,7 +32,7 @@ import java.util.Calendar;
 
 
 public class ViewCourseActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>{
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int EDITOR_REQUEST_CODE = 1002;
     private String action;
@@ -138,27 +138,10 @@ public class ViewCourseActivity extends AppCompatActivity
 
     public void addAssessment(View view) {
         Log.d("Add Assessment", "Adding Assessment");
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Add Assessment")
-                .
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Do nothing, just close dialog
-                    }
-                })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        try {
-
-                        }
-                        catch (Exception e) {
-                            e.getMessage();
-                        }
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
+        AssessmentsDialogFragment assessmentsDialogFragment = new AssessmentsDialogFragment();
+        assessmentsDialogFragment.show(getSupportFragmentManager(), "AssessmentDialogFragment");
+        Intent intent = new Intent();
+        intent.putExtra("CourseId", courseId);
     }
 
     @Override
@@ -174,7 +157,7 @@ public class ViewCourseActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.d("ViewActivityResult", requestCode + " " + resultCode);
-        if(requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
             restartLoader();
         }
     }

@@ -65,6 +65,24 @@
             android:layout_height="53dp" />
 
         <TextView
+            android:id="@+id/ceAssessmentsLbl"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:gravity="start"
+            android:text="@string/assessments"
+            android:textSize="18sp"
+            android:labelFor="@+id/ceAssessment"/>
+
+        <EditText
+            android:id="@+id/ceAssessment"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:ems="10"
+            android:gravity="start"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+        <TextView
             android:id="@+id/ceMentorLbl"
             android:layout_width="match_parent"
             android:layout_height="53dp"
@@ -107,7 +125,7 @@
 
         <EditText
             android:id="@+id/ceNotesList"
-            android:layout_width="402dp"
+            android:layout_width="match_parent"
             android:layout_height="450dp"
             android:ems="10"
             android:gravity="start"

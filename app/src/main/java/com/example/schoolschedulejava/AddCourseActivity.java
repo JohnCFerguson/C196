@@ -2,10 +2,8 @@ package com.example.schoolschedulejava;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -144,14 +142,15 @@ public class AddCourseActivity extends AppCompatActivity {
     }
 
     public void setReminder() {
-        Intent notificationIntent = new Intent(this, NotifyService.class);
+        Intent notificationIntent = new Intent(this, CourseNotifyService.class);
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 1);
+        Calendar notifyStartDate = Calendar.getInstance();
+        notifyStartDate.setTime(startDate.getTime());
+        notifyStartDate.add(Calendar.DAY_OF_MONTH, -1);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, notifyStartDate.getTimeInMillis(), pendingIntent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

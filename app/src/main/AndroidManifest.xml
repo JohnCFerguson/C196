@@ -64,6 +64,18 @@
             android:name=".CourseWithMentorProvider"
             android:authorities="com.example.schoolschedulejava.coursewithmentorprovider"
             android:exported="false" />
+
+        <receiver
+            android:name=".AssessmentBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".CourseBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".CourseNotifyService"
+            android:exported="false" />
     </application>
 
 </manifest>
