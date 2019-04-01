@@ -11,10 +11,26 @@
         android:id="@+id/cvCourse"
         android:layout_width="121dp"
         android:layout_height="48dp"
-        android:text="@string/term_title"
+        android:text="@string/course_list"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/editCourseIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:clickable="true"
+        android:contentDescription="@string/edit_icon"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_pencil_white_48dp"
+        android:onClick="editCourse"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pressedTranslationZ="12dp" />
 
     <ListView
         android:id="@+id/cvList"

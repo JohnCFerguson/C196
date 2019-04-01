@@ -42,6 +42,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.schoolschedulejava.ViewTermActivity" />
         </activity>
+        <activity android:name=".EditCourseActivity" />
+
         <provider
             android:name=".TermProvider"
             android:authorities="com.example.schoolschedulejava.termprovider"

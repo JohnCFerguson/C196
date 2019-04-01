@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ViewCourseCursorAdapter extends CursorAdapter {
@@ -26,7 +27,9 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        Log.d("ViewCourseCursorAdapter", "In this cursor adapter");
+        /*String courseId = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_ID));
+
+        Log.d("Course Id", courseId);*/
 
         String courseName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_TITLE));
 
@@ -51,6 +54,8 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
             notes = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_NOTES));
         }
 
+        //Log.d("ViewCourseCursorAdapter", "Notes: " + notes);
+        //TextView courseIdView = view.findViewById(R.id.cvCourseId);
         TextView courseNameView = view.findViewById(R.id.courseTitle);
         TextView courseDatesView = view.findViewById(R.id.courseDates);
         TextView courseStatusView = view.findViewById(R.id.cvStatus);
@@ -60,6 +65,7 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
         TextView assessmentsView = view.findViewById(R.id.cvAssessments);
         TextView notesView = view.findViewById(R.id.cvNotesList);
 
+        //courseIdView.setText(courseId);
         courseNameView.setText(courseName);
         courseDatesView.setText(courseDates);
         courseStatusView.setText(courseStatus);

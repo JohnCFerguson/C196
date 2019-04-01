@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/courseName"
+        <TextView
+            android:id="@+id/ceCourseName"
             android:layout_width="414dp"
             android:layout_height="47dp"
             android:gravity="center"
@@ -23,8 +23,9 @@
             android:inputType=""
             android:text="@string/course_name"
             android:textSize="18sp" />
+
         <TextView
-            android:id="@+id/courseStartLbl"
+            android:id="@+id/ceCourseStartLbl"
             android:layout_width="113dp"
             android:layout_height="53dp"
             android:gravity="center"
@@ -32,12 +33,12 @@
             android:textSize="18sp" />
 
         <CalendarView
-            android:id="@+id/courseStart"
+            android:id="@+id/ceCourseStart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/courseEndLbl"
+            android:id="@+id/ceCourseEndLbl"
             android:layout_width="113dp"
             android:layout_height="53dp"
             android:gravity="center"
@@ -45,12 +46,12 @@
             android:textSize="18sp" />
 
         <CalendarView
-            android:id="@+id/courseEnd"
+            android:id="@+id/ceCourseEnd"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/statusLbl"
+            android:id="@+id/ceStatusLbl"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:gravity="start"
@@ -59,12 +60,12 @@
 
 
         <Spinner
-            android:id="@+id/statusSpinner"
+            android:id="@+id/ceStatusSpinner"
             android:layout_width="match_parent"
             android:layout_height="53dp" />
 
         <TextView
-            android:id="@+id/mentorLbl"
+            android:id="@+id/ceMentorLbl"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:gravity="start"
@@ -72,7 +73,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/mentorName"
+            android:id="@+id/ceMentorName"
             android:layout_width="414dp"
             android:layout_height="47dp"
             android:gravity="start"
@@ -83,7 +84,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/mentorEmail"
+            android:id="@+id/ceMentorEmail"
             android:layout_width="414dp"
             android:layout_height="47dp"
             android:gravity="start"
@@ -94,7 +95,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/mentorPhone"
+            android:id="@+id/ceMentorPhone"
             android:layout_width="414dp"
             android:layout_height="47dp"
             android:gravity="start"
@@ -103,6 +104,16 @@
             android:inputType="phone"
             android:text="@string/mentor_phone"
             android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/ceNotesList"
+            android:layout_width="402dp"
+            android:layout_height="450dp"
+            android:ems="10"
+            android:gravity="start"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:labelFor="@+id/cvNotes" />
 
     </LinearLayout>
 

@@ -31,5 +31,12 @@
     <string name="course_status">Course Status:</string>
     <string name="assessments">Assessments</string>
     <string name="assessments_info">Assessments Info:</string>
-    <string name="notes">Notes</string>
+    <string name="new_note">New Note</string>
+    <string name="course_list">Course List</string>
+    <string name="delete_term">Delete Term</string>
+    <string name="edit_icon">Edit Icon</string>
+    <string name="edit_course">Edit Course</string>
+    <string name="course_start">Course Start</string>
+    <string name="notes">Notes:</string>
+    <string name="pencil_icon">pencil icon</string>
 </resources>

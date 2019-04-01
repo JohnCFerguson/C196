@@ -32,8 +32,14 @@ public class CourseWithMentorProvider extends ContentProvider {
     private SQLiteDatabase db;
 
     private static final String COURSE_WITH_MENTOR_QUERY =
-            "SELECT * FROM courses INNER JOIN mentors ON courses." + DBOpenHelper.MENTORID +
-                    " = mentors." + DBOpenHelper.MENTOR_ID + " WHERE ";
+            "SELECT courses." + DBOpenHelper.COURSE_ID + ", courses." + DBOpenHelper.TERMID +
+            ", courses." + DBOpenHelper.MENTORID + ", courses." + DBOpenHelper.COURSE_TITLE +
+            ", courses." + DBOpenHelper.COURSE_START + ", courses." + DBOpenHelper.COURSE_END +
+            ", courses." + DBOpenHelper.COURSE_STATUS + ", courses." + DBOpenHelper.COURSE_ASSESSMENTS +
+            ", courses." + DBOpenHelper.COURSE_NOTES + ", mentors." + DBOpenHelper.MENTOR_NAME +
+            ", mentors." + DBOpenHelper.MENTOR_EMAIL + ", mentors." + DBOpenHelper.MENTOR_PHONE +
+            " FROM courses INNER JOIN mentors ON courses." + DBOpenHelper.MENTORID +
+            " = mentors." + DBOpenHelper.MENTOR_ID + " WHERE ";
 
     @Override
     public boolean onCreate() {

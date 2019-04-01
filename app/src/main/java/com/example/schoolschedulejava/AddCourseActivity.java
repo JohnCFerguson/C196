@@ -1,7 +1,11 @@
 package com.example.schoolschedulejava;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -16,12 +20,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddCourseActivity extends AppCompatActivity {
 
     private static final String SET_DEBUG_TAG = "Jank is borked in AddCourseActivity";
-    private static final String[] status = {"Planning to Take", "In Progress", "Complete", "Incomplete"};
+
     private String action;
     private EditText courseName;
     private EditText mentorName;
@@ -42,6 +47,13 @@ public class AddCourseActivity extends AppCompatActivity {
         intent = getIntent();
 
         termId =  intent.getLongExtra("TermId", 0);
+
+        ArrayList<String> status = new ArrayList<>();
+
+        status.add("Planning to Take");
+        status.add("In Progress");
+        status.add("Dropped");
+        status.add("Complete");
 
 
         courseName = findViewById(R.id.courseName);
@@ -121,6 +133,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 else {
                     insertCourse(termId, mentorId, newCourse, strStartDate, strEndDate,
                             courseStatus, courseAssessments, courseNotes);
+                    setReminder();
                     setResult(RESULT_OK);
                 }
                 break;
@@ -128,6 +141,17 @@ public class AddCourseActivity extends AppCompatActivity {
                 break;
         }
         finish();
+    }
+
+    public void setReminder() {
+        Intent notificationIntent = new Intent(this, NotifyService.class);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 1);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

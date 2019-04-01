@@ -1,7 +1,9 @@
 package com.example.schoolschedulejava;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -14,15 +16,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class ViewTermActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -31,6 +34,7 @@ public class ViewTermActivity extends AppCompatActivity
     private CursorAdapter cA;
     private Intent intent;
     private long termId;
+    private ListView list;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -68,23 +72,43 @@ public class ViewTermActivity extends AppCompatActivity
         termDatesVew.setText(termDates);
 
         cA = new CourseCursorAdapter(this, null,0);
-        ListView list = findViewById(R.id.listView);
+        list = findViewById(R.id.listView);
         list.setAdapter(cA);
         list.setOnItemClickListener( new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                //Log.d("ItemClicked", );
-                openCourseViewForExistingCourse(view, id);
+                Log.d("ViewTerm List set", id + "");
+                openCourseViewForExistingCourse(view, (int)id);
             }
         });
-
-
 
         getLoaderManager().initLoader(0, null, this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_term, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id) {
+            case R.id.action_add_course:
+                openAddCourseViewForExistingTerm(findViewById(android.R.id.content));
+                break;
+            case R.id.action_delete_term:
+                deleteTerm();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     private void restartLoader() {
         getLoaderManager().restartLoader(0, null, this);
     }
@@ -120,15 +144,73 @@ public class ViewTermActivity extends AppCompatActivity
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 
-    public void openCourseViewForExistingCourse(View view, long courseId) {
-        Intent intent = new Intent(this, ViewCourseActivity.class);
-        intent.putExtra("CourseId", courseId);
-        startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    public void openCourseViewForExistingCourse(View view, int id) {
+        Log.d("Opening course", id+ "");
+        try{
+            Intent intent = new Intent(this, ViewCourseActivity.class);
+            intent.putExtra("CourseId", (id));
+            startActivityForResult(intent, EDITOR_REQUEST_CODE);
+        }
+        catch (Exception e){
+            e.getMessage();
+        }
+
+    }
+
+    public void deleteTerm() {
+        View view;
+        Boolean courseStillInProgress = false;
+        TextView tvStatus;
+        String status;
+        for(int i = 0; i < list.getCount(); i++) {
+            view = list.getAdapter().getView(i, null, null);
+            tvStatus = view.findViewById(R.id.tvStatus);
+            status = tvStatus.getText().toString();
+            Log.d("In Delete Loop", status);
+            if(status.equals("Planning to Take") || status.equals(("In Progress"))){
+                Log.d("DeleteTerm", "courseSTillInProgress is True");
+                courseStillInProgress = true;
+            }
+        }
+        if(courseStillInProgress) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("You cannot delete a term that still has active courses!")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //no action necessary alert closes on OK, this is all that's necessary
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        else {
+            final String whereClause = "terms." + DBOpenHelper.TERM_ID + " = ?";
+            final String[] selectionArgs = {String.valueOf(termId)};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to delete this Term?")
+                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //Do nothing, just cancel
+                        }
+                    })
+                    .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            getContentResolver().delete(
+                                    TermProvider.TERMS_URI, whereClause, selectionArgs
+                            );
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("ViewTermActivityResult", requestCode + " " + resultCode);
+        Log.d("ViewTermActivityResult", requestCode + " " + resultCode + " " + data);
         if(requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK) {
             restartLoader();
         }

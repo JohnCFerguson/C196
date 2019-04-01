@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,16 @@ public class CourseCursorAdapter extends CursorAdapter {
     //@Override
     public void bindView(View view, Context context, Cursor courseCursor) {
 
+        /*long courseId = courseCursor.getLong(courseCursor.getColumnIndex(DBOpenHelper.COURSE_ID));
+
+        String[] columnNames = courseCursor.getColumnNames();
+
+        for(String column : columnNames) {
+            Log.d("Column Name: ", column);
+        }
+
+        Log.d("Course Id", String.valueOf(courseId));*/
+
         String courseTitle = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.COURSE_TITLE));
 
         String courseDates = courseCursor.getString(
@@ -49,6 +60,7 @@ public class CourseCursorAdapter extends CursorAdapter {
         String mentorEmail = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_EMAIL));
         String mentorPhone = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_PHONE));
 
+        //TextView tvCourseId = view.findViewById(R.id.tvCourseId);
         TextView tvCourse = view.findViewById(R.id.tvCourse);
         TextView tvCourseDates = view.findViewById(R.id.tvCourseDates);
         TextView tvCourseStatus = view.findViewById(R.id.tvStatus);
@@ -58,7 +70,7 @@ public class CourseCursorAdapter extends CursorAdapter {
         TextView tvMentorEmail = view.findViewById(R.id.tvMentorEmail);
         TextView tvMentorPhone = view.findViewById(R.id.tvMentorPhone);
 
-
+        //tvCourseId.setText(String.valueOf(courseId));
         tvCourse.setText(courseTitle);
         tvCourseDates.setText(courseDates);
         tvCourseStatus.setText(courseStatus);
