@@ -161,7 +161,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
         int mentorId = 0;
         String selection = DBOpenHelper.MENTOR_NAME + " = ?  AND " + DBOpenHelper.MENTOR_PHONE + " = ? AND " +
-                DBOpenHelper.MENTOR_PHONE + " = ?";
+                DBOpenHelper.MENTOR_EMAIL + " = ?";
         String[] selectionArgs = {strMentorName, strMentorEmail, strMentorPhone};
 
         Cursor mentorQuery = getContentResolver().query(MentorProvider.MENTORS_URI, DBOpenHelper.MENTORS_COLUMNS,
