@@ -89,7 +89,7 @@ class EditAssessmentsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to update this course?")
+        builder.setMessage("Are you sure you want to update this assessment?")
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         setResult(RESULT_CANCELED);
@@ -123,13 +123,10 @@ class EditAssessmentsActivity extends AppCompatActivity {
         String[] selectionArgs = {String.valueOf(assessmentId)};
         ContentValues values = new ContentValues();
 
-        values.put(DBOpenHelper.COURSE_START, strStartDate);
-        values.put(DBOpenHelper.COURSE_END, strEndDate);
-        values.put(DBOpenHelper.COURSE_STATUS, status);
-        values.put(DBOpenHelper.MENTORID, mentorId);
-        values.put(DBOpenHelper.COURSE_NOTES, notes);
-        values.put(DBOpenHelper.MENTORID, mentorId);
-        int courseUri = getContentResolver().update(CourseProvider.COURSES_URI, values, selection, selectionArgs);
-        Log.d("EditCourseActivity", "Updated Course " + courseUri);
+        values.put(DBOpenHelper.ASSESSMENT_NAME, assessmentName);
+        values.put(DBOpenHelper.ASSESSMENT_TYPE, assessmentType);
+        values.put(DBOpenHelper.ASSESSMENT_DATE, assessmentDate);
+        int assUri = getContentResolver().update(AssessmentProvider.ASSESSMENTS_URI, values, selection, selectionArgs);
+        Log.d("EditAssessmentActivity", "Updated Assessment " + assUri);
     }
 }
