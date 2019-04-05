@@ -31,6 +31,12 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
 
         Log.d("Course Id", courseId);*/
 
+        String[] colNames = cursor.getColumnNames();
+        for (String col : colNames) {
+            Log.d("ViewCourseCursor", col);
+        }
+
+
         String courseName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_TITLE));
 
         String courseDates = cursor.getString(
@@ -47,7 +53,12 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
         String mentorEmail = cursor.getString(cursor.getColumnIndex(DBOpenHelper.MENTOR_EMAIL));
         String mentorPhone = cursor.getString(cursor.getColumnIndex(DBOpenHelper.MENTOR_PHONE));
 
-        String assessments = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_ASSESSMENTS));
+        String assessments = cursor.getString(cursor.getColumnIndex("assessments"));
+        String newAssessment = "";
+        if(assessments != null) {
+            newAssessment = assessments.replace(',', '\n');
+            Log.d("ViewCourseAdapter", newAssessment);
+        }
 
         String notes = "";
         if(cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_NOTES)) != null) {
@@ -72,7 +83,7 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
         mentorNameView.setText(mentorName);
         mentorEmailView.setText(mentorEmail);
         mentorPhoneView.setText(mentorPhone);
-        assessmentsView.setText(assessments);
+        assessmentsView.setText(newAssessment);
         notesView.setText(notes);
     }
 }

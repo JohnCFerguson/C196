@@ -11,10 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +20,6 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 
 public class ViewTermActivity extends AppCompatActivity
@@ -70,6 +65,8 @@ public class ViewTermActivity extends AppCompatActivity
 
         termNameView.setText(termName);
         termDatesVew.setText(termDates);
+
+
 
         cA = new CourseCursorAdapter(this, null,0);
         list = findViewById(R.id.listView);
@@ -120,7 +117,7 @@ public class ViewTermActivity extends AppCompatActivity
 
         return new CursorLoader(
                 this,   // Parent activity context
-                CourseWithMentorProvider.COURSE_WITH_MENTOR_URI,       // Table to query
+                CourseWithExtrasProvider.COURSE_WITH_EXTRAS_URI,       // Table to query
                 null,     // Projection to return
                 selection,            // No selection clause
                 selectionArgs,            // No selection arguments
@@ -146,9 +143,12 @@ public class ViewTermActivity extends AppCompatActivity
 
     public void openCourseViewForExistingCourse(View view, int id) {
         Log.d("Opening course", id+ "");
+        TextView courseDates = view.findViewById(R.id.tvCourseDates);
+        String dates = courseDates.getText().toString();
         try{
             Intent intent = new Intent(this, ViewCourseActivity.class);
-            intent.putExtra("CourseId", (id));
+            intent.putExtra("CourseId", id);
+            intent.putExtra("Dates", dates);
             startActivityForResult(intent, EDITOR_REQUEST_CODE);
         }
         catch (Exception e){

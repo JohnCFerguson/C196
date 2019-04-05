@@ -1,14 +1,13 @@
 package com.example.schoolschedulejava;
 
-import android.app.AlertDialog;
+import android.app.AlarmManager;
 import android.app.LoaderManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,17 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -36,14 +31,16 @@ public class ViewCourseActivity extends AppCompatActivity
 
     private static final int EDITOR_REQUEST_CODE = 1002;
     private String action;
-    private Boolean edited = false;
     private CursorAdapter cA;
     private Intent intent;
     private String notes;
     private int courseId;
     private EditText cvNotes;
     private ListView list;
+    private Calendar courseStart;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +56,21 @@ public class ViewCourseActivity extends AppCompatActivity
         cA = new ViewCourseCursorAdapter(this, null,0);
         list = findViewById(R.id.cvList);
         list.setAdapter(cA);
+        courseStart = Calendar.getInstance();
 
         getLoaderManager().initLoader(0, null, this);
+
+        String courseDates = intent.getStringExtra("Dates");
+
+        String strCourseStart = courseDates.substring(0, courseDates.indexOf(' '));
+
+        Log.d("ViewCourseActivity", strCourseStart);
+        try {
+            courseStart.setTime(sdf.parse(strCourseStart));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -100,7 +110,7 @@ public class ViewCourseActivity extends AppCompatActivity
         finish();
     }
 
-    private void restartLoader() {
+    public void restartLoader() {
         getLoaderManager().restartLoader(0, null, this);
     }
 
@@ -128,7 +138,7 @@ public class ViewCourseActivity extends AppCompatActivity
         Log.d("ViewCourse Loader", selectionArgs.toString());
         return new CursorLoader(
                 this,   // Parent activity context
-                CourseWithMentorProvider.COURSE_WITH_MENTOR_URI,       // Table to query
+                CourseWithExtrasProvider.COURSE_WITH_EXTRAS_URI,       // Table to query
                 null,     // Projection to return
                 selection,
                 selectionArgs,
@@ -142,6 +152,20 @@ public class ViewCourseActivity extends AppCompatActivity
         assessmentsDialogFragment.show(getSupportFragmentManager(), "AssessmentDialogFragment");
         Intent intent = new Intent();
         intent.putExtra("CourseId", courseId);
+    }
+
+    public void editAssessments(View view) {
+        Intent intent = new Intent(this, ViewAssessmentsActivity.class);
+        intent.putExtra("CourseId", courseId);
+        startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    }
+
+    public void setReminder(View view) {
+        Intent notificationIntent = new Intent(this, CourseNotifyService.class);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, courseStart.getTimeInMillis(), pendingIntent);
     }
 
     @Override

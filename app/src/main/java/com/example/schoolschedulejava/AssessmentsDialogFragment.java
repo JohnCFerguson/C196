@@ -32,8 +32,6 @@ public class AssessmentsDialogFragment extends DialogFragment {
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        ArrayList<String> assessment = new ArrayList<>();
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -99,31 +97,21 @@ public class AssessmentsDialogFragment extends DialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void addAssessment(String name, String time, String type) {
-        String[] columnSelection = {DBOpenHelper.COURSE_ASSESSMENTS};
-        String selection = "courses." + DBOpenHelper.COURSE_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(getActivity().getIntent().getIntExtra("CourseId", 0))};
-        Cursor cursor = getActivity().getContentResolver().query(CourseProvider.COURSES_URI, columnSelection,
-                selection, selectionArgs, null, null);
-
-        String assessments = "";
-
-        while(cursor.moveToNext()) {
-            assessments += cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_ASSESSMENTS));
-            Log.d("Assessments", assessments);
-        }
-
-
         if(name != "" || name != null) {
             ContentValues values = new ContentValues();
 
-            assessments += name + "\n" + type + "\n" + time + "\n\n";
+            values.put(DBOpenHelper.ASSESSMENT_NAME, name);
+            values.put(DBOpenHelper.ASSESSMENT_DATE, time);
+            values.put(DBOpenHelper.ASSESSMENT_TYPE, type);
+            values.put(DBOpenHelper.COURSEID,
+                    getActivity().getIntent().getIntExtra("CourseId", 0));
 
-            values.put(DBOpenHelper.COURSE_ASSESSMENTS, assessments);
-
-            getActivity().getContentResolver().update(CourseProvider.COURSES_URI, values, selection, selectionArgs);
+            getActivity().getContentResolver().insert(AssessmentProvider.ASSESSMENTS_URI, values);
 
             TextView cvAssessment = getActivity().findViewById(R.id.cvAssessments);
-            cvAssessment.setText(assessments);
+            String currentAssessments = cvAssessment.getText().toString();
+            String newAssessmentString = currentAssessments + "\n" + name;
+            cvAssessment.setText(newAssessmentString);
         }
     }
 }

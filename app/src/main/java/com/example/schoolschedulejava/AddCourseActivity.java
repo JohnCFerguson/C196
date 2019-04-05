@@ -131,7 +131,6 @@ public class AddCourseActivity extends AppCompatActivity {
                 else {
                     insertCourse(termId, mentorId, newCourse, strStartDate, strEndDate,
                             courseStatus, courseAssessments, courseNotes);
-                    setReminder();
                     setResult(RESULT_OK);
                 }
                 break;
@@ -139,18 +138,6 @@ public class AddCourseActivity extends AppCompatActivity {
                 break;
         }
         finish();
-    }
-
-    public void setReminder() {
-        Intent notificationIntent = new Intent(this, CourseNotifyService.class);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
-
-        Calendar notifyStartDate = Calendar.getInstance();
-        notifyStartDate.setTime(startDate.getTime());
-        notifyStartDate.add(Calendar.DAY_OF_MONTH, -1);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, notifyStartDate.getTimeInMillis(), pendingIntent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -200,7 +187,6 @@ public class AddCourseActivity extends AppCompatActivity {
         values.put(DBOpenHelper.COURSE_START, courseStart);
         values.put(DBOpenHelper.COURSE_END, courseEnd);
         values.put(DBOpenHelper.COURSE_STATUS, courseStatus);
-        values.put(DBOpenHelper.COURSE_ASSESSMENTS, courseAssessments);
         values.put(DBOpenHelper.COURSE_NOTES, courseNotes);
         Uri courseUri = getContentResolver().insert(CourseProvider.COURSES_URI, values);
         Log.d("AddCourseActivity", "Inserted Course " + courseUri.getLastPathSegment());

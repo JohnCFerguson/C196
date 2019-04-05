@@ -34,7 +34,7 @@ import static android.Manifest.permission_group.CALENDAR;
 
 
 public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String SET_DEBUG_TAG = "Jank is borked";
     private static final int EDITOR_REQUEST_CODE = 1001;
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity
         ContentValues values = new ContentValues();
         values.put(DBOpenHelper.ASSESSMENT_NAME, assessmentName);
         values.put(DBOpenHelper.ASSESSMENT_TYPE, assessmentType);
+        values.put(DBOpenHelper.ASSESSMENT_DATE, "13-May-2019");
+        values.put(DBOpenHelper.COURSEID, 1);
         Uri assessmentUri = getContentResolver().insert(AssessmentProvider.ASSESSMENTS_URI, values);
         Log.d("MainActivity", "Inserted Assessment " + assessmentUri.getLastPathSegment());
 
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity
         values.put(DBOpenHelper.COURSE_START, courseStart);
         values.put(DBOpenHelper.COURSE_END, courseEnd);
         values.put(DBOpenHelper.COURSE_STATUS, courseStatus);
-        values.put(DBOpenHelper.COURSE_ASSESSMENTS, courseAssessments);
         values.put(DBOpenHelper.COURSE_NOTES, courseNotes);
         Uri courseUri = getContentResolver().insert(CourseProvider.COURSES_URI, values);
         Log.d("MainActivity", "Inserted Course " + courseUri.getLastPathSegment());
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void restartLoader() {
+    public void restartLoader() {
         getLoaderManager().restartLoader(0, null, this);
     }
 
@@ -227,51 +228,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void addNewTerm(View view) throws ParseException {
-        ArrayList<String> termsList = new ArrayList<>();
-        Cursor termsQuery = getContentResolver().query(TermProvider.TERMS_URI, DBOpenHelper.TERMS_COLUMNS,
-                null, null, null, null);
-        String termTitle = "";
-        Calendar startDate = Calendar.getInstance();
-        Calendar endDate = Calendar.getInstance();
-
-        try {
-            while(termsQuery.moveToNext()) {
-                String term = termsQuery.getString(termsQuery.getColumnIndex(DBOpenHelper.TERM_TITLE));
-                Log.d("AddTermActivity", term);
-                try {
-                    termsList.add(term);
-                }
-                catch (Exception e) {
-                    Log.e(SET_DEBUG_TAG, "Error " + e.toString());
-                }
-            }
-        }
-        catch (Exception e) {
-            Log.e(SET_DEBUG_TAG, "Error going to next " + e.toString());
-        }
-
-        if(termsList.size() != 0) {
-            termsQuery.moveToLast();
-            Log.d("StringToDate", termsQuery.getString(termsQuery.getColumnIndex(DBOpenHelper.TERM_END)));
-            Date date = new SimpleDateFormat("dd-MMM-yyyy").parse(
-                    termsQuery.getString(
-                            termsQuery.getColumnIndex(DBOpenHelper.TERM_END)));
-
-            startDate.setTime(date);
-        }
-
-        startDate.set(startDate.get(Calendar.YEAR), (startDate.get(Calendar.MONTH) + 1), 1);
-        endDate.setTime(startDate.getTime());
-
-        endDate.add(Calendar.MONTH, 5);
-        endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.getActualMaximum(Calendar.DATE));
-        termTitle = "Term " + (termsList.size() + 1);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-        String strStartDate =  sdf.format(startDate.getTime());
-        String strEndDate = sdf.format(endDate.getTime());
-
-        insertTerm(termTitle, strStartDate, strEndDate);
+    public void addNewTerm(View view) {
+        TermsDialogFragment termDialogFragment = new TermsDialogFragment();
+        termDialogFragment.show(getSupportFragmentManager(), "TermDialogFragment");
     }
 
     @Override

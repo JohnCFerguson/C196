@@ -46,4 +46,5 @@
     <string name="assessment_date">Assessment Date</string>
     <string name="channel_name">School Schedule Notification</string>
     <string name="channel_description">Notification about school schedule</string>
+    <string name="reminder_icon">reminder icon</string>
 </resources>

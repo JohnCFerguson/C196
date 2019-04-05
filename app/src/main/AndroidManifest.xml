@@ -43,6 +43,7 @@
                 android:value="com.example.schoolschedulejava.ViewTermActivity" />
         </activity>
         <activity android:name=".EditCourseActivity" />
+        <activity android:name=".ViewAssessmentsActivity" />
 
         <provider
             android:name=".TermProvider"
@@ -61,8 +62,8 @@
             android:authorities="com.example.schoolschedulejava.courseprovider"
             android:exported="false" />
         <provider
-            android:name=".CourseWithMentorProvider"
-            android:authorities="com.example.schoolschedulejava.coursewithmentorprovider"
+            android:name=".CourseWithExtrasProvider"
+            android:authorities="com.example.schoolschedulejava.coursewithextrasprovider"
             android:exported="false" />
 
         <receiver

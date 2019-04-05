@@ -29,12 +29,12 @@ public class EditCourseActivity extends AppCompatActivity {
     private Intent intent;
     private Calendar calStartDate = Calendar.getInstance();
     private Calendar calEndDate = Calendar.getInstance();
-    private Spinner statusSpinner = findViewById(R.id.ceStatusSpinner);
-    private EditText assessmentsView = findViewById(R.id.ceAssessment);
-    private EditText mentorNameView = findViewById(R.id.ceMentorName);
-    private EditText mentorEmailView = findViewById(R.id.ceMentorEmail);
-    private EditText mentorPhoneView = findViewById(R.id.ceMentorPhone);
-    private EditText notesView = findViewById(R.id.ceNotesList);
+    private Spinner statusSpinner;
+    private EditText assessmentsView;
+    private EditText mentorNameView;
+    private EditText mentorEmailView ;
+    private EditText mentorPhoneView;
+    private EditText notesView;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -55,31 +55,30 @@ public class EditCourseActivity extends AppCompatActivity {
 
         String[] selectionArgs = {String.valueOf(courseId)};
 
-        Cursor cursor = getContentResolver().query(CourseWithMentorProvider.COURSE_WITH_MENTOR_URI, null,
+        Cursor courseCursor = getContentResolver().query(CourseWithExtrasProvider.COURSE_WITH_EXTRAS_URI, null,
                 "courses." + DBOpenHelper.COURSE_ID + " = ?", selectionArgs, null, null);
 
-        cursor.moveToNext();
+        courseCursor.moveToNext();
 
-        String courseName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_TITLE));
+        String courseName = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.COURSE_TITLE));
 
-        String startDate = cursor.getString(
-                cursor.getColumnIndex(DBOpenHelper.COURSE_START)
+        String startDate = courseCursor.getString(
+                courseCursor.getColumnIndex(DBOpenHelper.COURSE_START)
         );
 
-        String endDate =  cursor.getString(
-                cursor.getColumnIndex(DBOpenHelper.COURSE_END)
+        String endDate =  courseCursor.getString(
+                courseCursor.getColumnIndex(DBOpenHelper.COURSE_END)
         );
 
-        String courseStatus = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_STATUS));
-        String assessments = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_ASSESSMENTS));
+        String courseStatus = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.COURSE_STATUS));
 
-        String mentorName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.MENTOR_NAME));
-        String mentorEmail = cursor.getString(cursor.getColumnIndex(DBOpenHelper.MENTOR_EMAIL));
-        String mentorPhone = cursor.getString(cursor.getColumnIndex(DBOpenHelper.MENTOR_PHONE));
+        String mentorName = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_NAME));
+        String mentorEmail = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_EMAIL));
+        String mentorPhone = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.MENTOR_PHONE));
 
         String notes = "";
-        if(cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_NOTES)) != null) {
-            notes = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_NOTES));
+        if(courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.COURSE_NOTES)) != null) {
+            notes = courseCursor.getString(courseCursor.getColumnIndex(DBOpenHelper.COURSE_NOTES));
         }
 
         //Log.d("ViewCourseCursorAdapter", "Notes: " + notes);
@@ -87,6 +86,12 @@ public class EditCourseActivity extends AppCompatActivity {
         TextView courseNameView = findViewById(R.id.ceCourseName);
         CalendarView startDateCal = findViewById(R.id.ceCourseStart);
         CalendarView endDateCal = findViewById(R.id.ceCourseEnd);
+        statusSpinner = findViewById(R.id.ceStatusSpinner);
+        assessmentsView = findViewById(R.id.ceAssessment);
+        mentorNameView = findViewById(R.id.ceMentorName);
+        mentorEmailView = findViewById(R.id.ceMentorEmail);
+        mentorPhoneView = findViewById(R.id.ceMentorPhone);
+        notesView = findViewById(R.id.ceNotesList);
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, status);
@@ -119,7 +124,6 @@ public class EditCourseActivity extends AppCompatActivity {
         }
 
         statusSpinner.setSelection(spinnerPos);
-        assessmentsView.setText(assessments);
         mentorNameView.setText(mentorName);
         mentorEmailView.setText(mentorEmail);
         mentorPhoneView.setText(mentorPhone);
@@ -180,7 +184,6 @@ public class EditCourseActivity extends AppCompatActivity {
         values.put(DBOpenHelper.MENTORID, mentorId);
         values.put(DBOpenHelper.COURSE_NOTES, notes);
         values.put(DBOpenHelper.MENTORID, mentorId);
-        values.put(DBOpenHelper.COURSE_ASSESSMENTS, assessments);
         int courseUri = getContentResolver().update(CourseProvider.COURSES_URI, values, selection, selectionArgs);
         Log.d("EditCourseActivity", "Updated Course " + courseUri);
     }

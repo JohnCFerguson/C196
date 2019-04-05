@@ -3,6 +3,7 @@ package com.example.schoolschedulejava;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 
@@ -29,12 +30,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String COURSE_START = "courseStart";
     public static final String COURSE_END = "courseEnd";
     public static final String COURSE_STATUS = "courseStatus";
-    public static final String COURSE_ASSESSMENTS = "courseAssessments";
     public static final String COURSE_NOTES = "courseNotes";
 
     public static final String[] COURSES_COLUMNS =
             {COURSE_ID, TERMID, MENTORID, COURSE_TITLE, COURSE_START, COURSE_END, COURSE_STATUS,
-                    COURSE_ASSESSMENTS, COURSE_NOTES};
+                    COURSE_NOTES};
 
     //Mentor table constants identifying values for course mentors
     public static final String TABLE_MENTORS = "mentors";
@@ -49,11 +49,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     //Assessments table constants identifying values for course assessments
     public static final String TABLE_ASSESSMENTS = "assessments";
     public static final String ASSESSMENT_ID = "_id";
+    public static final String COURSEID = "courseId";
     public static final String ASSESSMENT_NAME = "assessmentName";
     public static final String ASSESSMENT_TYPE = "assessmentType";
+    public static final String ASSESSMENT_DATE = "assessmentDate";
+
 
     public static final String[] ASSESSMENTS_COLUMNS =
-            {ASSESSMENT_ID, ASSESSMENT_NAME, ASSESSMENT_TYPE};
+            {ASSESSMENT_ID, COURSEID, ASSESSMENT_NAME, ASSESSMENT_TYPE, ASSESSMENT_DATE};
 
     private static final String TABLE_CREATE_TERMS =
             "CREATE TABLE " + TABLE_TERMS + " (" +
@@ -69,12 +72,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     MENTOR_EMAIL + " TEXT, " +
                     MENTOR_PHONE + " TEXT)";
 
-    private static final String TABLE_CREATE_ASSESSMENTS =
-            "CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
-                    ASSESSMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    ASSESSMENT_NAME + " TEXT, " +
-                    ASSESSMENT_TYPE + " TEXT)";
-
     private static final String TABLE_CREATE_COURSES =
             "CREATE TABLE " + TABLE_COURSES + " (" +
                     COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -84,10 +81,19 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     COURSE_START + " TEXT, " +
                     COURSE_END + " TEXT, " +
                     COURSE_STATUS + " TEXT, " +
-                    COURSE_ASSESSMENTS + " TEXT," +
                     COURSE_NOTES + " TEXT, " +
                     "FOREIGN KEY (" + TERMID + ") REFERENCES " + TABLE_TERMS+ "(" + TERM_ID + "), " +
                     "FOREIGN KEY (" + MENTORID + ") REFERENCES " + TABLE_MENTORS+ "(" + MENTOR_ID + ")" +
+                    ")";
+
+    private static final String TABLE_CREATE_ASSESSMENTS =
+            "CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
+                    ASSESSMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COURSEID + " INTEGER," +
+                    ASSESSMENT_NAME + " TEXT, " +
+                    ASSESSMENT_TYPE + " TEXT,  " +
+                    ASSESSMENT_DATE + " TEXT, " +
+                    "FOREIGN KEY (" + COURSEID + ") REFERENCES " + TABLE_ASSESSMENTS + "(" +COURSE_ID +")" +
                     ")";
 
     public DBOpenHelper(Context context) {
@@ -100,6 +106,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE_MENTORS);
         db.execSQL(TABLE_CREATE_ASSESSMENTS);
         db.execSQL(TABLE_CREATE_COURSES);
+
+    Log.d("DBOpenHelper", "Created Database Tables");
     }
 
     @Override
