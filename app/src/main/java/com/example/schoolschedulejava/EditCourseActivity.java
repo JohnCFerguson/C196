@@ -123,7 +123,7 @@ public class EditCourseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        statusSpinner.setSelection(spinnerPos);
+        statusSpinner.setSelection(spinnerPos, true);
         mentorNameView.setText(mentorName);
         mentorEmailView.setText(mentorEmail);
         mentorPhoneView.setText(mentorPhone);
@@ -169,7 +169,6 @@ public class EditCourseActivity extends AppCompatActivity {
         String strEndDate = sdf.format(calEndDate.getTime());
 
         String status = statusSpinner.getSelectedItem().toString().trim();
-        String assessments = assessmentsView.getText().toString().trim();
 
         int mentorId = getMentorId(mentorName, mentorEmail, mentorPhone);
         String notes = notesView.getText().toString().trim();
