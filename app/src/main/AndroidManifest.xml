@@ -42,8 +42,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.schoolschedulejava.ViewTermActivity" />
         </activity>
-        <activity android:name=".EditCourseActivity" />
-        <activity android:name=".ViewAssessmentsActivity" />
+        <activity
+            android:name=".EditAssessmentsActivity"
+            android:label="@string/edit_assessment"
+            android:parentActivityName=".ViewAssessmentsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.schoolschedulejava.ViewAssessmentsActivity" />
+        </activity>
+        <activity
+            android:name=".EditCourseActivity"
+            android:label="@string/edit_course"
+            android:parentActivityName=".ViewCourseActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.schoolschedulejava.ViewCourseActivity" />
+        </activity>
+        <activity
+            android:name=".ViewAssessmentsActivity"
+            android:label="@string/view_assessments"
+            android:parentActivityName=".ViewCourseActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.schoolschedulejava.ViewCourseActivity" />
+        </activity>
 
         <provider
             android:name=".TermProvider"

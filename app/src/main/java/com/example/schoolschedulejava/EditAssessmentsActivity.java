@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-class EditAssessmentsActivity extends AppCompatActivity {
+public class EditAssessmentsActivity extends AppCompatActivity {
 
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
     private EditText editAssessmentName;
@@ -50,7 +51,6 @@ class EditAssessmentsActivity extends AppCompatActivity {
 
         Cursor assessmentCursor = getContentResolver().query(AssessmentProvider.ASSESSMENTS_URI, null,
                 selection, selectionArgs, null, null);
-
 
         assessmentCursor.moveToNext();
 
@@ -83,6 +83,19 @@ class EditAssessmentsActivity extends AppCompatActivity {
                 assDate.set(year, month, dayOfMonth);
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

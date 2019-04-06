@@ -66,8 +66,6 @@ public class ViewTermActivity extends AppCompatActivity
         termNameView.setText(termName);
         termDatesVew.setText(termDates);
 
-
-
         cA = new CourseCursorAdapter(this, null,0);
         list = findViewById(R.id.listView);
         list.setAdapter(cA);

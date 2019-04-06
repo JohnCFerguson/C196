@@ -31,12 +31,6 @@ public class ViewCourseCursorAdapter extends CursorAdapter {
 
         Log.d("Course Id", courseId);*/
 
-        String[] colNames = cursor.getColumnNames();
-        for (String col : colNames) {
-            Log.d("ViewCourseCursor", col);
-        }
-
-
         String courseName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.COURSE_TITLE));
 
         String courseDates = cursor.getString(

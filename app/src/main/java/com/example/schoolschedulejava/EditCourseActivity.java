@@ -87,7 +87,6 @@ public class EditCourseActivity extends AppCompatActivity {
         CalendarView startDateCal = findViewById(R.id.ceCourseStart);
         CalendarView endDateCal = findViewById(R.id.ceCourseEnd);
         statusSpinner = findViewById(R.id.ceStatusSpinner);
-        assessmentsView = findViewById(R.id.ceAssessment);
         mentorNameView = findViewById(R.id.ceMentorName);
         mentorEmailView = findViewById(R.id.ceMentorEmail);
         mentorPhoneView = findViewById(R.id.ceMentorPhone);

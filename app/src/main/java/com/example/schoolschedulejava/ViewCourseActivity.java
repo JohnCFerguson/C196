@@ -61,7 +61,6 @@ public class ViewCourseActivity extends AppCompatActivity
         getLoaderManager().initLoader(0, null, this);
 
         String courseDates = intent.getStringExtra("Dates");
-
         String strCourseStart = courseDates.substring(0, courseDates.indexOf(' '));
 
         Log.d("ViewCourseActivity", strCourseStart);
@@ -128,6 +127,16 @@ public class ViewCourseActivity extends AppCompatActivity
         Intent intent = new Intent(this, EditCourseActivity.class);
         intent.putExtra("CourseId", courseId);
         startActivityForResult(intent, EDITOR_REQUEST_CODE);
+    }
+
+    public void shareNotes(View view) {
+        TextView notesList = findViewById(R.id.cvNotesList);
+        String strNotes = notesList.getText().toString();
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, strNotes);
+        startActivity(Intent.createChooser(sharingIntent, "Share Notes via"));
     }
 
     @Override

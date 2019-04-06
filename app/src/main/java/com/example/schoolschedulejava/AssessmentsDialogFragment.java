@@ -65,8 +65,6 @@ public class AssessmentsDialogFragment extends DialogFragment {
                         String strAssDate = sdf.format(assDate.getTime());
                         String strAssType = assSpinner.getSelectedItem().toString();
                         addAssessment(assName, strAssDate, strAssType);
-
-                        setReminder(strAssDate);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -79,21 +77,6 @@ public class AssessmentsDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private void setReminder(String time) {
-        Intent notificationIntent = new Intent(getActivity(), AssessmentNotifyService.class);
-        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getService(getActivity(), 0, notificationIntent, 0);
-
-        Calendar notificationDate = Calendar.getInstance();
-        try{
-            notificationDate.setTime(sdf.parse(time));
-        }
-        catch (Exception e) {
-            e.getMessage();
-        }
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void addAssessment(String name, String time, String type) {
@@ -110,7 +93,15 @@ public class AssessmentsDialogFragment extends DialogFragment {
 
             TextView cvAssessment = getActivity().findViewById(R.id.cvAssessments);
             String currentAssessments = cvAssessment.getText().toString();
-            String newAssessmentString = currentAssessments + "\n" + name;
+            String newAssessmentString;
+            Log.d("AssessmentDialogFrag", currentAssessments);
+            if (!currentAssessments.equals("")) {
+                 newAssessmentString = currentAssessments + "\n" + name;
+            }
+            else {
+                newAssessmentString = name;
+            }
+            Log.d("AssessmentDialogFrag", newAssessmentString);
             cvAssessment.setText(newAssessmentString);
         }
     }

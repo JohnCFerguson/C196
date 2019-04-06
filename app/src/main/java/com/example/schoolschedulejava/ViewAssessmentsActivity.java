@@ -1,19 +1,26 @@
 package com.example.schoolschedulejava;
 
+import android.app.AlarmManager;
 import android.app.LoaderManager;
+import android.app.PendingIntent;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ViewAssessmentsActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -41,12 +48,56 @@ public class ViewAssessmentsActivity extends AppCompatActivity
         list = findViewById(R.id.eaList);
         list.setAdapter(cA);
 
-
         getLoaderManager().initLoader(0, null, this);
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id) {
+            case android.R.id.home:
+                finishEditing();
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        finishEditing();
+    }
+
+    private void finishEditing() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+
+    public void setReminder(View view) {
+        Intent notificationIntent = new Intent(this, AssessmentNotifyService.class);
+        AlarmManager alarmManager = (AlarmManager)this.getSystemService(ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
+
+        TextView timeView = findViewById(R.id.eaAssessmentDate);
+
+        String time = timeView.getText().toString();
+
+        Calendar notificationDate = Calendar.getInstance();
+        try{
+            notificationDate.setTime(sdf.parse(time));
+        }
+        catch (Exception e) {
+            e.getMessage();
+        }
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
+        Toast.makeText(this, "Reminder set for this Assessment!",
+                Toast.LENGTH_LONG).show();
+    }
+
     public void editAssessment(View view) {
-        TextView assessmentNameView = (TextView) view.findViewById(R.id.eaAssessmentName);
+        TextView assessmentNameView = findViewById(R.id.eaAssessmentName);
         String assessmentName = assessmentNameView.getText().toString();
 
         try{
@@ -62,7 +113,7 @@ public class ViewAssessmentsActivity extends AppCompatActivity
     }
 
     public void deleteAssessment(View view) {
-        TextView assessmentNameView = view.findViewById(R.id.eaAssessmentName);
+        TextView assessmentNameView = findViewById(R.id.eaAssessmentName);
         String assessmentName = assessmentNameView.getText().toString();
         String[] selectionArgs = {assessmentName, courseId + ""};
         String selection = DBOpenHelper.ASSESSMENT_NAME + " = ? AND " + DBOpenHelper.COURSEID + " = ?";
@@ -73,7 +124,7 @@ public class ViewAssessmentsActivity extends AppCompatActivity
     }
 
     private void restartLoader() {
-        getLoaderManager().restartLoader(0, null, null);
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
